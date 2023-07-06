@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -26,7 +27,11 @@ class _LoginViewState extends State<LoginView> {
                       BorderRadius.vertical(bottom: Radius.circular(16)),
                 ),
                 child: Center(
-                  child: Image.asset('assets/images/parkflow_logo.png'),
+                  child: Text(
+                    'ParkFlow',
+                    style:
+                        GoogleFonts.galada(color: Colors.white, fontSize: 40),
+                  ),
                 ),
               ),
               Container(
