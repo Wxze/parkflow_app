@@ -15,9 +15,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginView(),
+      theme: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: const Color(0xFF583290),
+              )),
+      home: const LoginView(),
     );
   }
 }
