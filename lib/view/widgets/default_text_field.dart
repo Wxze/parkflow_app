@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField({
@@ -30,13 +29,15 @@ class DefaultTextField extends StatelessWidget {
           color: Color(0xFF583290),
         )),
         hintText: hintText,
-        hintStyle: GoogleFonts.lato(
+        hintStyle: const TextStyle(
+          fontFamily: 'Lato',
           fontSize: 14,
         ),
       ),
-      style: GoogleFonts.lato(
+      style: const TextStyle(
+        fontFamily: 'Lato',
         fontSize: 14,
-        color: const Color(0xFF000000),
+        color: Color(0xFF000000),
       ),
     );
   }

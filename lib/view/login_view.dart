@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
 class LoginView extends StatefulWidget {
@@ -28,11 +27,14 @@ class _LoginViewState extends State<LoginView> {
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(16)),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'ParkFlow',
-                      style:
-                          GoogleFonts.galada(color: Colors.white, fontSize: 40),
+                      style: TextStyle(
+                          fontFamily: 'Galada',
+                          color: Colors.white,
+                          fontSize: 40),
+                      // GoogleFonts.galada(color: Colors.white, fontSize: 40),
                     ),
                   ),
                 ),
@@ -49,43 +51,44 @@ class _LoginViewState extends State<LoginView> {
                 EdgeInsets.only(top: height * .22, right: 20.0, left: 20.0),
             child: SizedBox(
               width: width,
-              child: Card(
+              child: const Card(
                 color: Colors.white,
                 elevation: 4.0,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 22, horizontal: 40),
+                  padding: EdgeInsets.symmetric(vertical: 22, horizontal: 40),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         "Login",
-                        style: GoogleFonts.lato(
+                        style: TextStyle(
+                            fontFamily: 'Lato',
                             fontSize: 24,
-                            color: const Color(0xFF35244E),
+                            color: Color(0xFF35244E),
                             fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 18,
                       ),
                       Row(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             width: 12,
                           ),
                           Text(
                             'Email',
-                            style: GoogleFonts.lato(
+                            style: TextStyle(
+                              fontFamily: 'Lato',
                               fontSize: 12,
-                              color: const Color(0xFF000000),
+                              color: Color(0xFF000000),
                             ),
                           )
                         ],
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 31,
                         child: DefaultTextField(
                           hintText: 'parflow@email.com',
@@ -93,27 +96,28 @@ class _LoginViewState extends State<LoginView> {
                           isPasswordField: false,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 17,
                       ),
                       Row(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             width: 12,
                           ),
                           Text(
                             'Senha',
-                            style: GoogleFonts.lato(
+                            style: TextStyle(
+                              fontFamily: 'Lato',
                               fontSize: 12,
-                              color: const Color(0xFF000000),
+                              color: Color(0xFF000000),
                             ),
                           )
                         ],
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 7,
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 31,
                         child: DefaultTextField(
                           hintText: '•••••••••••••••',

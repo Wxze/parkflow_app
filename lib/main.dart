@@ -18,9 +18,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Theme.of(context).copyWith(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: const Color(0xFF583290),
-              )),
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: const Color(0xFF583290),
+            ),
+      ),
       home: const LoginView(),
     );
   }
