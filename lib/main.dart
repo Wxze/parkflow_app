@@ -17,7 +17,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: Theme.of(context).copyWith(
+      theme: ThemeData(
+        fontFamily: 'Lato',
         colorScheme: Theme.of(context).colorScheme.copyWith(
               primary: const Color(0xFF583290),
             ),
