@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkflow_app/view/login_view.dart';
+import 'package:parkflow_app/view/parking_lots_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,11 @@ class _MyAppState extends State<MyApp> {
               primary: const Color(0xFF583290),
             ),
       ),
-      home: const LoginView(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginView(),
+        '/parking_lots': (context) => const ParkingLotsView()
+      },
     );
   }
 }

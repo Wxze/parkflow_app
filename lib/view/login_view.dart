@@ -146,7 +146,10 @@ class _LoginViewState extends State<LoginView> {
                         children: [
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed('/parking_lots');
+                              },
                               child: const Text(
                                 'Entrar',
                                 style: TextStyle(fontWeight: FontWeight.bold),
