@@ -51,15 +51,16 @@ class _LoginViewState extends State<LoginView> {
                 EdgeInsets.only(top: height * .22, right: 20.0, left: 20.0),
             child: SizedBox(
               width: width,
-              child: const Card(
+              child: Card(
                 color: Colors.white,
                 elevation: 4.0,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 22, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 22, horizontal: 40),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         "Login",
                         style: TextStyle(
                             fontFamily: 'Lato',
@@ -67,10 +68,10 @@ class _LoginViewState extends State<LoginView> {
                             color: Color(0xFF35244E),
                             fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 18,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           SizedBox(
                             width: 12,
@@ -85,21 +86,21 @@ class _LoginViewState extends State<LoginView> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 31,
                         child: DefaultTextField(
-                          hintText: 'parflow@email.com',
+                          hintText: 'parkflow@email.com',
                           icon: Icons.person,
                           isPasswordField: false,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 17,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           SizedBox(
                             width: 12,
@@ -114,16 +115,82 @@ class _LoginViewState extends State<LoginView> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 31,
                         child: DefaultTextField(
                           hintText: '•••••••••••••••',
                           icon: Icons.lock,
                           isPasswordField: true,
                         ),
+                      ),
+                      const SizedBox(
+                        height: 13,
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Esqueci minha senha',
+                            style: TextStyle(
+                                fontSize: 12, color: Color(0xBF120A1D)),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 29,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text(
+                                'Entrar',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const SizedBox(
+                        width: 155,
+                        height: 5,
+                        child: Divider(
+                          color: Color(0x73120A1D),
+                          thickness: 1,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Não possui conta?',
+                            style: TextStyle(
+                              color: Color(0xFF120A1D),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Text(
+                            'Cadastre-se',
+                            style: TextStyle(
+                              color: Color(0xFF69479B),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
                       ),
                     ],
                   ),
