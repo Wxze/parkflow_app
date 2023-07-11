@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkflow_app/view/login_view.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
+import 'package:parkflow_app/view/register_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         '/': (context) => const LoginView(),
+        '/register': (context) => const RegisterView(),
         '/parking_lots': (context) => const ParkingLotsView()
       },
     );

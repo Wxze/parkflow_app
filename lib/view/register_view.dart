@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:parkflow_app/view/parking_lots_view.dart';
-import 'package:parkflow_app/view/register_view.dart';
+import 'package:parkflow_app/view/login_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -37,6 +36,7 @@ class _LoginViewState extends State<LoginView> {
                           fontFamily: 'Galada',
                           color: Colors.white,
                           fontSize: 40),
+                      // GoogleFonts.galada(color: Colors.white, fontSize: 40),
                     ),
                   ),
                 ),
@@ -63,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
-                        "Login",
+                        "Cadastro",
                         style: TextStyle(
                             fontFamily: 'Lato',
                             fontSize: 24,
@@ -132,14 +132,59 @@ class _LoginViewState extends State<LoginView> {
                         height: 13,
                       ),
                       const Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                            'Esqueci minha senha',
-                            style: TextStyle(
-                                fontSize: 12, color: Color(0xBF120A1D)),
+                          SizedBox(
+                            width: 12,
                           ),
+                          Text(
+                            'Confirmar senha',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 12,
+                              color: Color(0xFF000000),
+                            ),
+                          )
                         ],
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                        height: 31,
+                        child: DefaultTextField(
+                          hintText: '•••••••••••••••',
+                          icon: Icons.lock,
+                          isPasswordField: true,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 17,
+                      ),
+                      const Row(
+                        children: [
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Text(
+                            'Telefone',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              fontSize: 12,
+                              color: Color(0xFF000000),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      const SizedBox(
+                        height: 31,
+                        child: DefaultTextField(
+                          hintText: '(16) 99999-9999',
+                          icon: Icons.phone,
+                          isPasswordField: false,
+                        ),
                       ),
                       const SizedBox(
                         height: 29,
@@ -151,57 +196,15 @@ class _LoginViewState extends State<LoginView> {
                               onPressed: () {
                                 Navigator.of(context).push(
                                   PageTransition(
-                                      child: const ParkingLotsView(),
-                                      type: PageTransitionType.size,
-                                      alignment: Alignment.center),
+                                    child: const LoginView(),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 300),
+                                  ),
                                 );
                               },
                               child: const Text(
-                                'Entrar',
+                                'Cadastrar',
                                 style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      const SizedBox(
-                        width: 155,
-                        height: 5,
-                        child: Divider(
-                          color: Color(0x73120A1D),
-                          thickness: 1,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Não possui conta?',
-                            style: TextStyle(
-                              color: Color(0xFF120A1D),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                              PageTransition(
-                                child: const RegisterView(),
-                                type: PageTransitionType.fade,
-                                duration: const Duration(milliseconds: 300),
-                              ),
-                            ),
-                            child: const Text(
-                              'Cadastre-se',
-                              style: TextStyle(
-                                color: Color(0xFF69479B),
                               ),
                             ),
                           ),
