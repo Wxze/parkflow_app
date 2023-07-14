@@ -47,173 +47,176 @@ class _RegisterViewState extends State<RegisterView> {
               ],
             ),
           ),
-          Container(
-            alignment: Alignment.topCenter,
-            padding:
-                EdgeInsets.only(top: height * .22, right: 20.0, left: 20.0),
-            child: SizedBox(
-              width: width,
-              child: Card(
-                color: Colors.white,
-                elevation: 4.0,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 22, horizontal: 40),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        "Cadastro",
-                        style: TextStyle(
-                            fontFamily: 'Lato',
-                            fontSize: 24,
-                            color: Color(0xFF35244E),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      const Row(
-                        children: [
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Text(
-                            'Email',
-                            style: TextStyle(
+          SingleChildScrollView(
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding:
+                  EdgeInsets.only(top: height * .22, right: 20.0, left: 20.0),
+              child: SizedBox(
+                width: width,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 4.0,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 22, horizontal: 40),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          "Cadastro",
+                          style: TextStyle(
                               fontFamily: 'Lato',
-                              fontSize: 12,
-                              color: Color(0xFF000000),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const SizedBox(
-                        height: 31,
-                        child: DefaultTextField(
-                          hintText: 'parkflow@email.com',
-                          icon: Icons.person,
-                          isPasswordField: false,
+                              fontSize: 24,
+                              color: Color(0xFF35244E),
+                              fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 17,
-                      ),
-                      const Row(
-                        children: [
-                          SizedBox(
-                            width: 12,
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        const Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
+                                color: Color(0xFF000000),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        const SizedBox(
+                          height: 31,
+                          child: DefaultTextField(
+                            hintText: 'parkflow@email.com',
+                            icon: Icons.person,
+                            isPasswordField: false,
                           ),
-                          Text(
-                            'Senha',
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 12,
-                              color: Color(0xFF000000),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const SizedBox(
-                        height: 31,
-                        child: DefaultTextField(
-                          hintText: '•••••••••••••••',
-                          icon: Icons.lock,
-                          isPasswordField: true,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 13,
-                      ),
-                      const Row(
-                        children: [
-                          SizedBox(
-                            width: 12,
+                        const SizedBox(
+                          height: 17,
+                        ),
+                        const Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'Senha',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
+                                color: Color(0xFF000000),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        const SizedBox(
+                          height: 31,
+                          child: DefaultTextField(
+                            hintText: '•••••••••••••••',
+                            icon: Icons.lock,
+                            isPasswordField: true,
                           ),
-                          Text(
-                            'Confirmar senha',
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 12,
-                              color: Color(0xFF000000),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const SizedBox(
-                        height: 31,
-                        child: DefaultTextField(
-                          hintText: '•••••••••••••••',
-                          icon: Icons.lock,
-                          isPasswordField: true,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 17,
-                      ),
-                      const Row(
-                        children: [
-                          SizedBox(
-                            width: 12,
+                        const SizedBox(
+                          height: 13,
+                        ),
+                        const Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'Confirmar senha',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
+                                color: Color(0xFF000000),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        const SizedBox(
+                          height: 31,
+                          child: DefaultTextField(
+                            hintText: '•••••••••••••••',
+                            icon: Icons.lock,
+                            isPasswordField: true,
                           ),
-                          Text(
-                            'Telefone',
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 12,
-                              color: Color(0xFF000000),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const SizedBox(
-                        height: 31,
-                        child: DefaultTextField(
-                          hintText: '(16) 99999-9999',
-                          icon: Icons.phone,
-                          isPasswordField: false,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 29,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  PageTransition(
-                                    child: const LoginView(),
-                                    type: PageTransitionType.fade,
-                                    duration: const Duration(milliseconds: 300),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Cadastrar',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                        const SizedBox(
+                          height: 17,
+                        ),
+                        const Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'Telefone',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
+                                color: Color(0xFF000000),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        const SizedBox(
+                          height: 31,
+                          child: DefaultTextField(
+                            hintText: '(16) 99999-9999',
+                            icon: Icons.phone,
+                            isPasswordField: false,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 29,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    PageTransition(
+                                      child: const LoginView(),
+                                      type: PageTransitionType.fade,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Cadastrar',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
