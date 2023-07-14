@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 Container(
                   height: height * .70,
-                  color: Colors.white,
+                  color: const Color(0xFFF5F5F5),
                 )
               ],
             ),

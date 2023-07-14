@@ -36,13 +36,12 @@ class _RegisterViewState extends State<RegisterView> {
                           fontFamily: 'Galada',
                           color: Colors.white,
                           fontSize: 40),
-                      // GoogleFonts.galada(color: Colors.white, fontSize: 40),
                     ),
                   ),
                 ),
                 Container(
                   height: height * .70,
-                  color: Colors.white,
+                  color: const Color(0xFFF5F5F5),
                 )
               ],
             ),
