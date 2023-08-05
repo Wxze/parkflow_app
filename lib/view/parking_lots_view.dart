@@ -10,12 +10,6 @@ class ParkingLotsView extends StatefulWidget {
 }
 
 class _ParkingLotsViewState extends State<ParkingLotsView> {
-  // List<Widget> MyPages = [
-  //   ParkingLotsBody(),
-  //   ReservationsBody(),
-
-  // ];
-
   ShapeBorder? bottomBarShape = const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(25)),
   );
@@ -28,6 +22,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
   Color selectedColor = const Color(0xFF583290);
   Color unselectedColor = const Color(0xFF583290);
 
+  // ignore: prefer_final_fields
   PageController _myPageController = PageController(initialPage: 0);
 
   @override

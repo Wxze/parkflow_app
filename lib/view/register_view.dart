@@ -187,6 +187,35 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ),
                         const SizedBox(
+                          height: 17,
+                        ),
+                        const Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Text(
+                              'CPF',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
+                                color: Color(0xFF000000),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        const SizedBox(
+                          height: 31,
+                          child: DefaultTextField(
+                            hintText: '998.303.090-02',
+                            icon: Icons.pin,
+                            isPasswordField: false,
+                          ),
+                        ),
+                        const SizedBox(
                           height: 29,
                         ),
                         Row(

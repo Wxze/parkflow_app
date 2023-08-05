@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
+import 'package:parkflow_app/view/recovery_view.dart';
 import 'package:parkflow_app/view/register_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
@@ -132,13 +133,22 @@ class _LoginViewState extends State<LoginView> {
                         const SizedBox(
                           height: 13,
                         ),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              'Esqueci minha senha',
-                              style: TextStyle(
-                                  fontSize: 12, color: Color(0xBF120A1D)),
+                            GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                PageTransition(
+                                  child: const RecoveryView(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 300),
+                                ),
+                              ),
+                              child: const Text(
+                                'Esqueci minha senha',
+                                style: TextStyle(
+                                    fontSize: 12, color: Color(0xBF120A1D)),
+                              ),
                             ),
                           ],
                         ),
