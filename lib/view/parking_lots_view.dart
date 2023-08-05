@@ -28,7 +28,6 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: true,
       extendBody: true,
       backgroundColor: const Color(0xFFF5F5F5),
