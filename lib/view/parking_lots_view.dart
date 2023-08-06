@@ -50,6 +50,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
         ],
       ),
       bottomNavigationBar: SnakeNavigationBar.color(
+        backgroundColor: const Color(0xFFE7E7F3),
         behaviour: snakeBarStyle,
         snakeShape: snakeShape,
         shape: bottomBarShape,
