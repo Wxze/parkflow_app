@@ -71,7 +71,7 @@ class _ParkingLotsPageState extends State<ParkingLotsPage> {
                     decoration: const InputDecoration(
                       isDense: true,
                       filled: true,
-                      // fillColor: Color(0xFFF0EDF5),
+                      contentPadding: EdgeInsets.all(12),
                       fillColor: Colors.white,
                       prefixIcon: Icon(Icons.search),
                       prefixIconConstraints:

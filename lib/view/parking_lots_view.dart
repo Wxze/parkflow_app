@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
+import 'package:parkflow_app/view/reservations_page.dart';
 
 class ParkingLotsView extends StatefulWidget {
   const ParkingLotsView({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
         physics: const NeverScrollableScrollPhysics(),
         children: const [
           ParkingLotsPage(),
-          ParkingLotsPage(),
+          ReservationsPage(),
           ParkingLotsPage(),
         ],
       ),
