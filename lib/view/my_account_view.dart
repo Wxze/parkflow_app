@@ -65,6 +65,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                   ),
                   Card(
                     color: const Color(0xFFFFFFFF),
+                    elevation: 3,
                     child: Container(
                       decoration: const BoxDecoration(
                           border: Border(
