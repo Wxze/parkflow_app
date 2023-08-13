@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
+
+import 'my_account_view.dart';
 
 class ParkingLotsView extends StatefulWidget {
   const ParkingLotsView({Key? key}) : super(key: key);
@@ -40,6 +43,35 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
           style: TextStyle(
               fontFamily: 'Galada', color: Colors.white, fontSize: 24),
         ),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem(
+                  value: 1,
+                  child: Text('Minha conta'),
+                ),
+                const PopupMenuItem(
+                  value: 2,
+                  child: Text('Meus veículos'),
+                )
+              ];
+            },
+            onSelected: (value) {
+              if (value == 1) {
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: const MyAccountView(),
+                    type: PageTransitionType.fade,
+                    duration: const Duration(milliseconds: 300),
+                  ),
+                );
+              } else if (value == 2) {
+                print('Página meus veículos');
+              }
+            },
+          )
+        ],
       ),
       body: PageView(
         controller: _myPageController,
