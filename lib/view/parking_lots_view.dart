@@ -54,7 +54,11 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
                 const PopupMenuItem(
                   value: 2,
                   child: Text('Meus veículos'),
-                )
+                ),
+                const PopupMenuItem(
+                  value: 3,
+                  child: Text('Sair'),
+                ),
               ];
             },
             onSelected: (value) {
@@ -68,6 +72,8 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
                 );
               } else if (value == 2) {
                 print('Página meus veículos');
+              } else if (value == 3) {
+                Navigator.of(context).pop();
               }
             },
           )

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:parkflow_app/view/login_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
 class RegisterView extends StatefulWidget {
@@ -223,14 +221,7 @@ class _RegisterViewState extends State<RegisterView> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(
-                                    PageTransition(
-                                      child: const LoginView(),
-                                      type: PageTransitionType.fade,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                    ),
-                                  );
+                                  Navigator.of(context).pop();
                                 },
                                 child: const Text(
                                   'Cadastrar',

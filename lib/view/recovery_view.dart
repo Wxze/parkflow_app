@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:parkflow_app/view/login_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
 class RecoveryView extends StatefulWidget {
@@ -107,14 +105,7 @@ class _RecoveryViewState extends State<RecoveryView> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.of(context).push(
-                                    PageTransition(
-                                      child: const LoginView(),
-                                      type: PageTransitionType.fade,
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                    ),
-                                  );
+                                  Navigator.of(context).pop();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       backgroundColor: Color(0xFF44A33C),

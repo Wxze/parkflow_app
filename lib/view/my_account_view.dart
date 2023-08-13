@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:parkflow_app/view/parking_lots_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
 class MyAccountView extends StatefulWidget {
@@ -134,14 +132,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      Navigator.of(context).push(
-                                        PageTransition(
-                                          child: const ParkingLotsView(),
-                                          type: PageTransitionType.fade,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                        ),
-                                      );
+                                      Navigator.of(context).pop();
                                     },
                                     child: const Text(
                                       'Salvar alterações',
