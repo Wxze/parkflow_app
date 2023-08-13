@@ -126,7 +126,9 @@ class _RecoveryViewState extends State<RecoveryView> {
                                 },
                                 child: const Text(
                                   'Enviar',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ),

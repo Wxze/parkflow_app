@@ -44,9 +44,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                             fontWeight: FontWeight.bold),
                       ),
                       ElevatedButton(
-                        onPressed: () {
-                          print('Desativar conta pressionado');
-                        },
+                        onPressed: () {},
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 const Color(0xFFC45454))),
@@ -61,7 +59,7 @@ class _MyAccountViewState extends State<MyAccountView> {
                     ],
                   ),
                   const SizedBox(
-                    height: 22,
+                    height: 10,
                   ),
                   Card(
                     color: const Color(0xFFFFFFFF),
@@ -138,7 +136,8 @@ class _MyAccountViewState extends State<MyAccountView> {
                                     child: const Text(
                                       'Salvar alterações',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
                                     ),
                                   ),
                                 ),

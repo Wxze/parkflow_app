@@ -5,6 +5,7 @@ import 'package:parkflow_app/view/parking_lots_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
 
 import 'my_account_view.dart';
+import 'my_vehicles_view.dart';
 
 class ParkingLotsView extends StatefulWidget {
   const ParkingLotsView({Key? key}) : super(key: key);
@@ -71,7 +72,13 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
                   ),
                 );
               } else if (value == 2) {
-                print('Página meus veículos');
+                Navigator.of(context).push(
+                  PageTransition(
+                    child: const MyVehiclesView(),
+                    type: PageTransitionType.fade,
+                    duration: const Duration(milliseconds: 300),
+                  ),
+                );
               } else if (value == 3) {
                 Navigator.of(context).pop();
               }

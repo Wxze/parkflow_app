@@ -169,7 +169,9 @@ class _LoginViewState extends State<LoginView> {
                                 },
                                 child: const Text(
                                   'Entrar',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ),

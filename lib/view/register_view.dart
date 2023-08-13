@@ -225,7 +225,9 @@ class _RegisterViewState extends State<RegisterView> {
                                 },
                                 child: const Text(
                                   'Cadastrar',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
                               ),
                             ),
