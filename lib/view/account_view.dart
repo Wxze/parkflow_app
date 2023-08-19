@@ -46,8 +46,10 @@ class _AccountViewState extends State<AccountView> {
                       ElevatedButton(
                         onPressed: () {},
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xFFC45454))),
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color(0xFFC45454),
+                          ),
+                        ),
                         child: const Row(
                           children: [
                             Icon(Icons.person_remove),
