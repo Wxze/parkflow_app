@@ -4,8 +4,8 @@ import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
 
-import 'my_account_view.dart';
-import 'my_vehicles_view.dart';
+import 'account_view.dart';
+import 'vehicles_view.dart';
 
 class ParkingLotsView extends StatefulWidget {
   const ParkingLotsView({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
               if (value == 1) {
                 Navigator.of(context).push(
                   PageTransition(
-                    child: const MyAccountView(),
+                    child: const AccountView(),
                     type: PageTransitionType.fade,
                     duration: const Duration(milliseconds: 300),
                   ),
@@ -74,7 +74,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
               } else if (value == 2) {
                 Navigator.of(context).push(
                   PageTransition(
-                    child: const MyVehiclesView(),
+                    child: const VehiclesView(),
                     type: PageTransitionType.fade,
                     duration: const Duration(milliseconds: 300),
                   ),

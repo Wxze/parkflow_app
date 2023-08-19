@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
-class MyAccountView extends StatefulWidget {
-  const MyAccountView({super.key});
+class AccountView extends StatefulWidget {
+  const AccountView({super.key});
 
   @override
-  State<MyAccountView> createState() => _MyAccountViewState();
+  State<AccountView> createState() => _AccountViewState();
 }
 
-class _MyAccountViewState extends State<MyAccountView> {
+class _AccountViewState extends State<AccountView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

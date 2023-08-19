@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:parkflow_app/view/widgets/my_vehicles_list_tile.dart';
+import 'package:parkflow_app/view/widgets/vehicles_list_tile.dart';
 
-class MyVehiclesView extends StatefulWidget {
-  const MyVehiclesView({super.key});
+class VehiclesView extends StatefulWidget {
+  const VehiclesView({super.key});
 
   @override
-  State<MyVehiclesView> createState() => _MyVehiclesViewState();
+  State<VehiclesView> createState() => _VehiclesViewState();
 }
 
-class _MyVehiclesViewState extends State<MyVehiclesView> {
+class _VehiclesViewState extends State<VehiclesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class _MyVehiclesViewState extends State<MyVehiclesView> {
                 ListView.separated(
                   itemCount: 3,
                   itemBuilder: (context, index) {
-                    return const MyVehiclesListTile();
+                    return const VehiclesListTile();
                   },
                   clipBehavior: Clip.none,
                   shrinkWrap: true,

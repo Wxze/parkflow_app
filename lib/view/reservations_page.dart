@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkflow_app/view/widgets/parking_lots_list_tile.dart';
+import 'package:parkflow_app/view/widgets/reservations_list_tile.dart';
 
 class ReservationsPage extends StatefulWidget {
   const ReservationsPage({super.key});
@@ -34,7 +34,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
           ListView.separated(
             itemCount: 20,
             itemBuilder: (context, index) {
-              return const ParkingLotsListTile();
+              return const ReservationsListTile();
             },
             clipBehavior: Clip.none,
             shrinkWrap: true,

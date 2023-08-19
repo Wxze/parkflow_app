@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyVehiclesListTile extends StatefulWidget {
-  const MyVehiclesListTile({super.key});
+class VehiclesListTile extends StatefulWidget {
+  const VehiclesListTile({super.key});
 
   @override
-  State<MyVehiclesListTile> createState() => _MyVehiclesListTileState();
+  State<VehiclesListTile> createState() => _VehiclesListTileState();
 }
 
-class _MyVehiclesListTileState extends State<MyVehiclesListTile> {
+class _VehiclesListTileState extends State<VehiclesListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
