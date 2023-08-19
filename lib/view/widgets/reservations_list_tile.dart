@@ -46,6 +46,10 @@ class _ReservationsListTileState extends State<ReservationsListTile> {
                   'Chegar em 20/10/2023, 10:09h',
                   style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
+                Text(
+                  'Honda Civic - BRA2E19',
+                  style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                ),
               ],
             ),
           ),

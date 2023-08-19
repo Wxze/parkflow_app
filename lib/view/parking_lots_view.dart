@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
+import 'package:parkflow_app/view/payments_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
 
 import 'account_view.dart';
@@ -92,7 +93,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
         children: const [
           ParkingLotsPage(),
           ReservationsPage(),
-          ParkingLotsPage(),
+          PaymentsPage(),
         ],
       ),
       bottomNavigationBar: SnakeNavigationBar.color(

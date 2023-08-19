@@ -17,7 +17,7 @@ class _VehiclesViewState extends State<VehiclesView> {
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
         centerTitle: true,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: const Text(
           'ParkFlow',
           style: TextStyle(
