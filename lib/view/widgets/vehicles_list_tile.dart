@@ -39,9 +39,10 @@ class _VehiclesListTileState extends State<VehiclesListTile> {
                   Text(
                     'Honda Civic',
                     style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF35244E),
-                        fontWeight: FontWeight.w600),
+                      fontSize: 18,
+                      color: Color(0xFF35244E),
+                      fontWeight: FontWeight.w600,
+                    ),
                     overflow: TextOverflow.fade,
                   ),
                   Text(

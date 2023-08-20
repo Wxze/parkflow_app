@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:parkflow_app/view/reservation_view.dart';
 
 class ParkingLotsListTile extends StatefulWidget {
   const ParkingLotsListTile({super.key});
@@ -10,9 +12,9 @@ class ParkingLotsListTile extends StatefulWidget {
 class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
+    return ListTile(
       tileColor: Colors.white,
-      leading: Column(
+      leading: const Column(
         children: [
           Expanded(
             child: CircleAvatar(
@@ -26,7 +28,7 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
           ),
         ],
       ),
-      title: Column(
+      title: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -73,6 +75,13 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
           ),
         ],
       ),
+      onTap: () => Navigator.of(context).push(
+                                PageTransition(
+                                  child: const ReservationView(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 300),
+                                ),
+                              ),
     );
   }
 }
