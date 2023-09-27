@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   page_transition: ^2.0.9
   flutter_snake_navigationbar: ^0.6.1
+  flutter_secure_storage: ^9.0.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

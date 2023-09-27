@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:parkflow_app/repository/login_repository.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
 import 'package:parkflow_app/view/recovery_view.dart';
 import 'package:parkflow_app/view/register_view.dart';
@@ -13,6 +14,10 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -61,169 +66,192 @@ class _LoginViewState extends State<LoginView> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 22, horizontal: 40),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Login",
-                          style: TextStyle(
-                              fontFamily: 'Lato',
-                              fontSize: 24,
-                              color: Color(0xFF35244E),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 18,
-                        ),
-                        const Row(
-                          children: [
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              'Email',
-                              style: TextStyle(
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Login",
+                            style: TextStyle(
                                 fontFamily: 'Lato',
-                                fontSize: 12,
-                                color: Color(0xFF000000),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        const SizedBox(
-                          height: 31,
-                          child: DefaultTextField(
-                            hintText: 'parkflow@email.com',
-                            icon: Icons.person,
-                            isPasswordField: false,
+                                fontSize: 24,
+                                color: Color(0xFF35244E),
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 17,
-                        ),
-                        const Row(
-                          children: [
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              'Senha',
-                              style: TextStyle(
-                                fontFamily: 'Lato',
-                                fontSize: 12,
-                                color: Color(0xFF000000),
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 7,
-                        ),
-                        const SizedBox(
-                          height: 31,
-                          child: DefaultTextField(
-                            hintText: '•••••••••••••••',
-                            icon: Icons.lock,
-                            isPasswordField: true,
+                          const SizedBox(
+                            height: 18,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 13,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: () => Navigator.of(context).push(
-                                PageTransition(
-                                  child: const RecoveryView(),
-                                  type: PageTransitionType.fade,
-                                  duration: const Duration(milliseconds: 300),
-                                ),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 12,
                               ),
-                              child: const Text(
-                                'Esqueci minha senha',
+                              Text(
+                                'Email',
                                 style: TextStyle(
-                                    fontSize: 12, color: Color(0xBF120A1D)),
-                              ),
+                                  fontFamily: 'Lato',
+                                  fontSize: 12,
+                                  color: Color(0xFF000000),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          SizedBox(
+                            // height: 31,
+                            child: DefaultTextField(
+                              formController: _emailController,
+                              hintText: 'parkflow@email.com',
+                              icon: Icons.person,
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Preencha este campo';
+                                }
+                                return null;
+                              },
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 29,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    PageTransition(
-                                        child: const ParkingLotsView(),
-                                        type: PageTransitionType.size,
-                                        alignment: Alignment.center),
-                                  );
-                                },
+                          ),
+                          const SizedBox(
+                            height: 17,
+                          ),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                'Senha',
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: 12,
+                                  color: Color(0xFF000000),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          SizedBox(
+                            // height: 31,
+                            child: DefaultTextField(
+                              formController: _passwordController,
+                              hintText: '•••••••••••••••',
+                              icon: Icons.lock,
+                              isPasswordField: true,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Preencha este campo';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 13,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                  PageTransition(
+                                    child: const RecoveryView(),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 300),
+                                  ),
+                                ),
                                 child: const Text(
-                                  'Entrar',
+                                  'Esqueci minha senha',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                      fontSize: 12, color: Color(0xBF120A1D)),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          width: 155,
-                          height: 5,
-                          child: Divider(
-                            color: Color(0x73120A1D),
-                            thickness: 1,
+                            ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Não possui conta?',
-                              style: TextStyle(
-                                color: Color(0xFF120A1D),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.of(context).push(
-                                PageTransition(
-                                  child: const RegisterView(),
-                                  type: PageTransitionType.fade,
-                                  duration: const Duration(milliseconds: 300),
+                          const SizedBox(
+                            height: 29,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (formKey.currentState!.validate()) {
+                                      int statusCode = await LoginRepository()
+                                          .login(_emailController.text,
+                                              _passwordController.text);
+
+                                      if (statusCode == 200) {
+                                        redirectUser();
+                                      } else {
+                                        showSnackBar(
+                                            "Usuário ou senha inválidos");
+                                      }
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Entrar',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
                                 ),
                               ),
-                              child: const Text(
-                                'Cadastre-se',
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const SizedBox(
+                            width: 155,
+                            height: 5,
+                            child: Divider(
+                              color: Color(0x73120A1D),
+                              thickness: 1,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Não possui conta?',
                                 style: TextStyle(
-                                  color: Color(0xFF69479B),
+                                  color: Color(0xFF120A1D),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                      ],
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                  PageTransition(
+                                    child: const RegisterView(),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 300),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Cadastre-se',
+                                  style: TextStyle(
+                                    color: Color(0xFF69479B),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -232,6 +260,30 @@ class _LoginViewState extends State<LoginView> {
           )
         ],
       ),
+    );
+  }
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 2),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.error,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: Colors.red,
+    ));
+  }
+
+  void redirectUser() {
+    Navigator.of(context).push(
+      PageTransition(
+          child: const ParkingLotsView(),
+          type: PageTransitionType.size,
+          alignment: Alignment.center),
     );
   }
 }

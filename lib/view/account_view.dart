@@ -9,6 +9,8 @@ class AccountView extends StatefulWidget {
 }
 
 class _AccountViewState extends State<AccountView> {
+  TextEditingController _defaultController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +88,8 @@ class _AccountViewState extends State<AccountView> {
                             const SizedBox(
                               height: 7,
                             ),
-                            const DefaultTextField(
+                            DefaultTextField(
+                              formController: _defaultController,
                               icon: Icons.person,
                               hintText: 'Fallen da Silva Toledo',
                               isPasswordField: false,
@@ -103,7 +106,8 @@ class _AccountViewState extends State<AccountView> {
                             const SizedBox(
                               height: 7,
                             ),
-                            const DefaultTextField(
+                            DefaultTextField(
+                              formController: _defaultController,
                               icon: Icons.mail,
                               hintText: 'parkflow@email.com',
                               isPasswordField: false,
@@ -120,7 +124,8 @@ class _AccountViewState extends State<AccountView> {
                             const SizedBox(
                               height: 7,
                             ),
-                            const DefaultTextField(
+                            DefaultTextField(
+                              formController: _defaultController,
                               icon: Icons.phone,
                               hintText: '(16) 99999-9999',
                               isPasswordField: false,

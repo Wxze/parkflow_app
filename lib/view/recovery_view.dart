@@ -9,6 +9,8 @@ class RecoveryView extends StatefulWidget {
 }
 
 class _RecoveryViewState extends State<RecoveryView> {
+  TextEditingController _defaultController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -89,9 +91,10 @@ class _RecoveryViewState extends State<RecoveryView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: 'parkflow@email.com',
                             icon: Icons.mail,
                             isPasswordField: false,

@@ -10,6 +10,8 @@ class VehiclesView extends StatefulWidget {
 }
 
 class _VehiclesViewState extends State<VehiclesView> {
+  TextEditingController _defaultController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +94,8 @@ class _VehiclesViewState extends State<VehiclesView> {
                           const SizedBox(
                             height: 7,
                           ),
-                          const DefaultTextField(
+                          DefaultTextField(
+                            formController: _defaultController,
                             icon: Icons.abc,
                             hintText: 'BRA2E19',
                             isPasswordField: false,
@@ -109,7 +112,8 @@ class _VehiclesViewState extends State<VehiclesView> {
                           const SizedBox(
                             height: 7,
                           ),
-                          const DefaultTextField(
+                          DefaultTextField(
+                            formController: _defaultController,
                             icon: Icons.branding_watermark_outlined,
                             hintText: 'Honda',
                             isPasswordField: false,
@@ -126,7 +130,8 @@ class _VehiclesViewState extends State<VehiclesView> {
                           const SizedBox(
                             height: 7,
                           ),
-                          const DefaultTextField(
+                          DefaultTextField(
+                            formController: _defaultController,
                             icon: Icons.branding_watermark_outlined,
                             hintText: 'Civic',
                             isPasswordField: false,
@@ -143,7 +148,8 @@ class _VehiclesViewState extends State<VehiclesView> {
                           const SizedBox(
                             height: 7,
                           ),
-                          const DefaultTextField(
+                          DefaultTextField(
+                            formController: _defaultController,
                             icon: Icons.colorize,
                             hintText: 'Preto',
                             isPasswordField: false,
@@ -160,7 +166,8 @@ class _VehiclesViewState extends State<VehiclesView> {
                           const SizedBox(
                             height: 7,
                           ),
-                          const DefaultTextField(
+                          DefaultTextField(
+                            formController: _defaultController,
                             icon: Icons.directions_car_rounded,
                             hintText: 'Carro',
                             isPasswordField: false,

@@ -9,6 +9,8 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  TextEditingController _defaultController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -89,9 +91,10 @@ class _RegisterViewState extends State<RegisterView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: 'parkflow@email.com',
                             icon: Icons.person,
                             isPasswordField: false,
@@ -118,9 +121,10 @@ class _RegisterViewState extends State<RegisterView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: '•••••••••••••••',
                             icon: Icons.lock,
                             isPasswordField: true,
@@ -147,9 +151,10 @@ class _RegisterViewState extends State<RegisterView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: '•••••••••••••••',
                             icon: Icons.lock,
                             isPasswordField: true,
@@ -176,9 +181,10 @@ class _RegisterViewState extends State<RegisterView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: '(16) 99999-9999',
                             icon: Icons.phone,
                             isPasswordField: false,
@@ -205,9 +211,10 @@ class _RegisterViewState extends State<RegisterView> {
                         const SizedBox(
                           height: 7,
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 31,
                           child: DefaultTextField(
+                            formController: _defaultController,
                             hintText: '998.303.090-02',
                             icon: Icons.pin,
                             isPasswordField: false,

@@ -3,20 +3,26 @@ import 'package:flutter/material.dart';
 class DefaultTextField extends StatelessWidget {
   const DefaultTextField({
     super.key,
+    required this.formController,
     required this.icon,
     required this.hintText,
     required this.isPasswordField,
+    this.validator
   });
 
   final IconData icon;
   final String hintText;
   final bool isPasswordField;
+  final TextEditingController formController;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: 1,
       obscureText: isPasswordField,
+      controller: formController,
+      validator: validator,
       decoration: InputDecoration(
         // contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         isDense: true,
