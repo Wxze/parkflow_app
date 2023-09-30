@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'api.dart';
 
 class LoginRepository {
-  Future<int> login(String email, String password) async {
+  Future<Response> login(String email, String password) async {
     Map body = {'email': email, 'password': password};
 
     var resp = await post(
@@ -20,6 +20,6 @@ class LoginRepository {
       final data = await json.decode(resp.body.toString());
     }
 
-    return resp.statusCode;
+    return resp;
   }
 }

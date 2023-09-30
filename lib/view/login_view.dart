@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/repository/login_repository.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
@@ -189,16 +192,22 @@ class _LoginViewState extends State<LoginView> {
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () async {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
                                     if (formKey.currentState!.validate()) {
-                                      int statusCode = await LoginRepository()
+                                      Response resp = await LoginRepository()
                                           .login(_emailController.text,
                                               _passwordController.text);
 
-                                      if (statusCode == 200) {
+                                      if (resp.statusCode == 200) {
                                         redirectUser();
                                       } else {
+                                        final data = await json
+                                            .decode(resp.body.toString());
+
                                         showSnackBar(
-                                            "Usuário ou senha inválidos");
+                                          data['errors'].join(',\n'),
+                                        );
                                       }
                                     }
                                   },
