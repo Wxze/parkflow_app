@@ -6,6 +6,8 @@ import 'package:parkflow_app/view/recovery_view.dart';
 import 'package:parkflow_app/view/register_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
+import '../utils/regex.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -111,6 +113,9 @@ class _LoginViewState extends State<LoginView> {
                                 if (value == null || value.isEmpty) {
                                   return 'Preencha este campo';
                                 }
+                                if (!RegExp(Regex.email).hasMatch(value)) {
+                                  return 'Email inválido';
+                                }
                                 return null;
                               },
                             ),
@@ -146,6 +151,9 @@ class _LoginViewState extends State<LoginView> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Preencha este campo';
+                                }
+                                if (value.length < 6) {
+                                  return 'A senha deve ter no mínimo 6 caracteres';
                                 }
                                 return null;
                               },
