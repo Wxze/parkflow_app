@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:parkflow_app/repository/password_repository.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
+
+import '../utils/regex.dart';
 
 class RecoveryView extends StatefulWidget {
   const RecoveryView({super.key});
@@ -9,7 +15,8 @@ class RecoveryView extends StatefulWidget {
 }
 
 class _RecoveryViewState extends State<RecoveryView> {
-  TextEditingController _defaultController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +99,23 @@ class _RecoveryViewState extends State<RecoveryView> {
                           height: 7,
                         ),
                         SizedBox(
-                          height: 31,
-                          child: DefaultTextField(
-                            formController: _defaultController,
-                            hintText: 'parkflow@email.com',
-                            icon: Icons.mail,
-                            isPasswordField: false,
+                          child: Form(
+                            key: formKey,
+                            child: DefaultTextField(
+                              formController: _emailController,
+                              hintText: 'parkflow@email.com',
+                              icon: Icons.mail,
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Preencha este campo';
+                                }
+                                if (!RegExp(Regex.email).hasMatch(value)) {
+                                  return 'Email inválido';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -109,23 +127,39 @@ class _RecoveryViewState extends State<RecoveryView> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: Color(0xFF44A33C),
-                                      elevation: 4.0,
-                                      content: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_circle,
-                                            color: Colors.white,
-                                          ),
-                                          SizedBox(width: 9),
-                                          Text(
-                                              'Email para recuperação enviado!'),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    elevation: 5),
+                                child: const Text(
+                                  'Voltar',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Color(0xFFC45454)),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    Response resp = await PasswordRepository()
+                                        .sendEmail(_emailController.text);
+
+                                    final data =
+                                        await json.decode(resp.body.toString());
+
+                                    if (resp.statusCode == 200) {
+                                      showSnackBar(
+                                        data['message'],
+                                      );
+                                      redirectUser();
+                                    }
+                                  }
                                 },
                                 child: const Text(
                                   'Enviar',
@@ -150,5 +184,24 @@ class _RecoveryViewState extends State<RecoveryView> {
         ],
       ),
     );
+  }
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 8),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.check_circle,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: const Color(0xFF44A33C),
+    ));
+  }
+
+  void redirectUser() {
+    Navigator.of(context).pop();
   }
 }

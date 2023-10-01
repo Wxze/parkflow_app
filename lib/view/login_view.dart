@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
@@ -283,7 +282,7 @@ class _LoginViewState extends State<LoginView> {
 
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         const Icon(
           Icons.error,

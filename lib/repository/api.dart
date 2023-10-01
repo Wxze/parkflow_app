@@ -8,4 +8,6 @@ abstract class ApiRepository {
   static const BASE = 'http://10.0.2.2:3000/';
 
   static const SIGNIN = '${BASE}auth/external_customers/sign_in';
+
+  static const PASSWORD = '${BASE}auth/external_customers/password';
 }

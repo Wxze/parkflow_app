@@ -1,13 +1,15 @@
 import 'dart:convert';
+
 import 'package:http/http.dart';
+
 import 'api.dart';
 
-class LoginRepository {
-  Future<Response> login(String email, String password) async {
-    Map body = {'email': email, 'password': password};
+class PasswordRepository {
+  Future<Response> sendEmail(String email) async {
+    Map body = {'email': email};
 
     var resp = await post(
-      Uri.parse(ApiRepository.SIGNIN),
+      Uri.parse(ApiRepository.PASSWORD),
       headers: <String, String>{
         'Content-Type': 'application/json;charset=UTF-8',
       },
