@@ -16,10 +16,6 @@ class LoginRepository {
       body: json.encode(body),
     );
 
-    if (resp.statusCode == 200 || resp.statusCode == 201) {
-      final data = await json.decode(resp.body.toString());
-    }
-
     return resp;
   }
 }

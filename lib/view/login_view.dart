@@ -200,6 +200,7 @@ class _LoginViewState extends State<LoginView> {
                                               _passwordController.text);
 
                                       if (resp.statusCode == 200) {
+                                        _passwordController.text = '';
                                         redirectUser();
                                       } else {
                                         final data = await json
