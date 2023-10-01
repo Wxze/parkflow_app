@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class DefaultTextField extends StatelessWidget {
-  const DefaultTextField(
+import 'default_text_field.dart';
+
+class MaskedTextField extends StatelessWidget {
+  const MaskedTextField(
       {super.key,
-      required this.formController,
+      required this.controller,
+      required this.text,
       required this.icon,
-      required this.hintText,
       required this.isPasswordField,
       this.validator,
-      this.keyboardType});
+      this.keyboardType,
+      required this.maskFormatter});
 
+  final TextEditingController controller;
+  final String text;
   final IconData icon;
-  final String hintText;
   final bool isPasswordField;
-  final TextEditingController formController;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
+  final MaskTextInputFormatter maskFormatter;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       maxLines: 1,
       obscureText: isPasswordField,
-      controller: formController,
+      controller: controller,
       validator: validator,
       keyboardType: keyboardType,
+      inputFormatters: [maskFormatter],
       decoration: InputDecoration(
         isDense: true,
         filled: true,
@@ -36,7 +42,7 @@ class DefaultTextField extends StatelessWidget {
             borderSide: BorderSide(
           color: Color(0xFF583290),
         )),
-        hintText: hintText,
+        hintText: text,
         hintStyle: const TextStyle(
           fontFamily: 'Lato',
           fontSize: 14,
