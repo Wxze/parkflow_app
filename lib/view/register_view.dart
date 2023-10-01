@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 import 'package:parkflow_app/view/widgets/masked_text_field.dart';
 
+import '../repository/auth_repository.dart';
 import '../utils/regex.dart';
 
 class RegisterView extends StatefulWidget {
@@ -14,6 +18,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _password1Controller = TextEditingController();
   TextEditingController _password2Controller = TextEditingController();
@@ -90,6 +95,41 @@ class _RegisterViewState extends State<RegisterView> {
                                 width: 12,
                               ),
                               Text(
+                                'Nome',
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: 12,
+                                  color: Color(0xFF000000),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 7,
+                          ),
+                          SizedBox(
+                            child: DefaultTextField(
+                              formController: _nameController,
+                              hintText: 'Gabriel da Silva Toledo',
+                              icon: Icons.person,
+                              isPasswordField: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Preencha este campo';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 17,
+                          ),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
                                 'Email',
                                 style: TextStyle(
                                   fontFamily: 'Lato',
@@ -106,7 +146,7 @@ class _RegisterViewState extends State<RegisterView> {
                             child: DefaultTextField(
                               formController: _emailController,
                               hintText: 'parkflow@email.com',
-                              icon: Icons.person,
+                              icon: Icons.mail,
                               isPasswordField: false,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -143,7 +183,7 @@ class _RegisterViewState extends State<RegisterView> {
                           SizedBox(
                             child: DefaultTextField(
                               formController: _password1Controller,
-                              hintText: '•••••••••••••••',
+                              hintText: '••••••',
                               icon: Icons.lock,
                               isPasswordField: true,
                               validator: (value) {
@@ -184,7 +224,7 @@ class _RegisterViewState extends State<RegisterView> {
                           SizedBox(
                             child: DefaultTextField(
                               formController: _password2Controller,
-                              hintText: '•••••••••••••••',
+                              hintText: '••••••',
                               icon: Icons.lock,
                               isPasswordField: true,
                               validator: (value) {
@@ -316,13 +356,33 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
                                     if (formKey.currentState!.validate()) {
-                                      print('Form valido');
-                                      print(_phoneController.text);
-                                      print(_cpfController.text);
+                                      Response resp = await AuthRepository()
+                                          .register(
+                                              _emailController.text,
+                                              _password1Controller.text,
+                                              _cpfController.text,
+                                              _nameController.text,
+                                              _phoneController.text);
+
+                                      if (resp.statusCode == 200 ||
+                                          resp.statusCode == 201) {
+                                        showSucessSnackBar(
+                                            'Usuário cadastrado com sucesso!');
+                                        redirectUser();
+                                      } else {
+                                        final data = await json
+                                            .decode(resp.body.toString());
+
+                                        print(data);
+                                        showErrorSnackBar(
+                                          data['errors']['full_messages']
+                                              .join(',\n'),
+                                        );
+                                      }
                                     }
                                   },
                                   child: const Text(
@@ -349,5 +409,39 @@ class _RegisterViewState extends State<RegisterView> {
         ],
       ),
     );
+  }
+
+  void redirectUser() {
+    Navigator.of(context).pop();
+  }
+
+  void showSucessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.check_circle,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: const Color(0xFF44A33C),
+    ));
+  }
+
+  void showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.error,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: Colors.red,
+    ));
   }
 }

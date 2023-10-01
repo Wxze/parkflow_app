@@ -9,5 +9,7 @@ abstract class ApiRepository {
 
   static const SIGNIN = '${BASE}auth/external_customers/sign_in';
 
+  static const REGISTER = '${BASE}auth/external_customers';
+
   static const PASSWORD = '${BASE}auth/external_customers/password';
 }
