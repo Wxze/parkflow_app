@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-import 'default_text_field.dart';
-
 class MaskedTextField extends StatelessWidget {
   const MaskedTextField(
       {super.key,

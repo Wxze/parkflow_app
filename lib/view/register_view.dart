@@ -225,18 +225,21 @@ class _RegisterViewState extends State<RegisterView> {
                           SizedBox(
                             child: MaskedTextField(
                               controller: _phoneController,
-                              text: '(16) 99999-9999',
+                              text: '(99) 99999-9999',
                               icon: Icons.phone,
                               isPasswordField: false,
                               keyboardType: TextInputType.phone,
                               maskFormatter: MaskTextInputFormatter(
-                                mask: '+## (##) #####-####',
+                                mask: '(##) #####-####',
                                 filter: {"#": RegExp(r'[0-9]')},
                                 type: MaskAutoCompletionType.lazy,
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Preencha este campo';
+                                }
+                                if (!RegExp(Regex.phone).hasMatch(value)) {
+                                  return 'Número de telefone inválido';
                                 }
                                 return null;
                               },
@@ -279,6 +282,9 @@ class _RegisterViewState extends State<RegisterView> {
                                 if (value == null || value.isEmpty) {
                                   return 'Preencha este campo';
                                 }
+                                if (!RegExp(Regex.cpf).hasMatch(value)) {
+                                  return 'CPF inválido';
+                                }
                                 return null;
                               },
                             ),
@@ -315,6 +321,8 @@ class _RegisterViewState extends State<RegisterView> {
                                         ?.unfocus();
                                     if (formKey.currentState!.validate()) {
                                       print('Form valido');
+                                      print(_phoneController.text);
+                                      print(_cpfController.text);
                                     }
                                   },
                                   child: const Text(
