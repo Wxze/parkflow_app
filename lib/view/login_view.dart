@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:parkflow_app/repository/login_repository.dart';
+import 'package:parkflow_app/repository/auth_repository.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
 import 'package:parkflow_app/view/recovery_view.dart';
 import 'package:parkflow_app/view/register_view.dart';
@@ -147,7 +147,7 @@ class _LoginViewState extends State<LoginView> {
                             // height: 31,
                             child: DefaultTextField(
                               formController: _passwordController,
-                              hintText: '•••••••••••••••',
+                              hintText: '••••••',
                               icon: Icons.lock,
                               isPasswordField: true,
                               validator: (value) {
@@ -194,7 +194,7 @@ class _LoginViewState extends State<LoginView> {
                                     FocusManager.instance.primaryFocus
                                         ?.unfocus();
                                     if (formKey.currentState!.validate()) {
-                                      Response resp = await LoginRepository()
+                                      Response resp = await AuthRepository()
                                           .login(_emailController.text,
                                               _passwordController.text);
 

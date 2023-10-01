@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:parkflow_app/repository/password_repository.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
+import '../repository/auth_repository.dart';
 import '../utils/regex.dart';
 
 class RecoveryView extends StatefulWidget {
@@ -147,7 +147,7 @@ class _RecoveryViewState extends State<RecoveryView> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (formKey.currentState!.validate()) {
-                                    Response resp = await PasswordRepository()
+                                    Response resp = await AuthRepository()
                                         .sendEmail(_emailController.text);
 
                                     final data =
@@ -188,7 +188,7 @@ class _RecoveryViewState extends State<RecoveryView> {
 
   void showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      duration: const Duration(seconds: 8),
+      duration: const Duration(seconds: 10),
       content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         const Icon(
           Icons.check_circle,

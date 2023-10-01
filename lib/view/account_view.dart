@@ -91,7 +91,7 @@ class _AccountViewState extends State<AccountView> {
                             DefaultTextField(
                               formController: _defaultController,
                               icon: Icons.person,
-                              hintText: 'Fallen da Silva Toledo',
+                              hintText: 'Gabriel da Silva Toledo',
                               isPasswordField: false,
                             ),
                             const SizedBox(
