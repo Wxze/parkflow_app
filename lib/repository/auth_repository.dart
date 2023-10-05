@@ -14,6 +14,16 @@ class AuthRepository {
       body: json.encode(body),
     );
 
+    dynamic auth = {
+      'access-token': resp.headers['access-token'],
+      'token-type': resp.headers['token-type'],
+      'uid': resp.headers['uid'],
+      'expiry': resp.headers['expiry'],
+      'client': resp.headers['client']
+    };
+
+    await ApiRepository.STORAGE.write(key: 'auth', value: json.encode(auth));
+
     return resp;
   }
 

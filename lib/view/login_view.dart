@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:parkflow_app/repository/api.dart';
 import 'package:parkflow_app/repository/auth_repository.dart';
 import 'package:parkflow_app/view/parking_lots_view.dart';
 import 'package:parkflow_app/view/recovery_view.dart';
@@ -200,6 +201,13 @@ class _LoginViewState extends State<LoginView> {
 
                                       if (resp.statusCode == 200) {
                                         _passwordController.text = '';
+                                        Map<String, String>? auth =
+                                            await ApiRepository.getTokenData();
+                                        print(auth!['access-token']);
+                                        print(auth['token-type']);
+                                        print(auth['uid']);
+                                        print(auth['expiry']);
+                                        print(auth['client']);
                                         redirectUser();
                                       } else {
                                         final data = await json
