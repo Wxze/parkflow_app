@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:parkflow_app/repository/api.dart';
+import 'package:parkflow_app/utils/app_position.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
 import 'package:parkflow_app/view/payments_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
@@ -31,6 +32,12 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
 
   // ignore: prefer_final_fields
   PageController _myPageController = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    print(AppPosition.getPosition());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +89,9 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
                   ),
                 );
               } else if (value == 3) {
-                Navigator.of(context).pop();
+                AppPosition.setPosition(context);
                 ApiRepository.clearTokenData();
+                Navigator.of(context).pop();
               }
             },
           )
@@ -129,5 +137,20 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
         unselectedLabelStyle: const TextStyle(fontSize: 10),
       ),
     );
+  }
+
+  void showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.error,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: Colors.red,
+    ));
   }
 }

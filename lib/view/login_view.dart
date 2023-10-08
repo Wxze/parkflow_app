@@ -9,6 +9,7 @@ import 'package:parkflow_app/view/recovery_view.dart';
 import 'package:parkflow_app/view/register_view.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 
+import '../utils/app_position.dart';
 import '../utils/regex.dart';
 
 class LoginView extends StatefulWidget {
@@ -24,10 +25,15 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    AppPosition.setPosition(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -297,6 +303,16 @@ class _LoginViewState extends State<LoginView> {
       backgroundColor: Colors.red,
     ));
   }
+
+  // void setPosition() async {
+  //   AppPosition.appPosition = await AppPosition.determinePosition().catchError(
+  //     (error) {
+  //       showSnackBar(error);
+  //       return error;
+  //     },
+  //   );
+  //   print(AppPosition.appPosition);
+  // }
 
   void redirectUser() {
     Navigator.of(context).push(

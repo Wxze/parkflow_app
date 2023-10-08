@@ -17,7 +17,7 @@ class RecoveryView extends StatefulWidget {
 class _RecoveryViewState extends State<RecoveryView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
