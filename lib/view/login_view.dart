@@ -203,11 +203,6 @@ class _LoginViewState extends State<LoginView> {
                                         _passwordController.text = '';
                                         Map<String, String>? auth =
                                             await ApiRepository.getTokenData();
-                                        print(auth!['access-token']);
-                                        print(auth['token-type']);
-                                        print(auth['uid']);
-                                        print(auth['expiry']);
-                                        print(auth['client']);
                                         redirectUser();
                                       } else {
                                         final data = await json

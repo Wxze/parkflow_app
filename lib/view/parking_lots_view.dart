@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:parkflow_app/repository/api.dart';
 import 'package:parkflow_app/view/parking_lots_page.dart';
 import 'package:parkflow_app/view/payments_page.dart';
 import 'package:parkflow_app/view/reservations_page.dart';
@@ -82,6 +83,7 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
                 );
               } else if (value == 3) {
                 Navigator.of(context).pop();
+                ApiRepository.clearTokenData();
               }
             },
           )
