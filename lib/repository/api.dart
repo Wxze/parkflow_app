@@ -34,4 +34,8 @@ abstract class ApiRepository {
 
     return authObj;
   }
+
+  static void clearTokenData() async {
+    await STORAGE.deleteAll();
+  }
 }
