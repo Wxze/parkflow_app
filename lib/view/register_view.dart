@@ -376,8 +376,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       } else {
                                         final data = await json
                                             .decode(resp.body.toString());
-
-                                        print(data);
+                                            
                                         showErrorSnackBar(
                                           data['errors']['full_messages']
                                               .join(',\n'),

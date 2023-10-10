@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:parkflow_app/models/parking_lot.dart';
 import 'package:parkflow_app/view/reservation_view.dart';
 
 class ParkingLotsListTile extends StatefulWidget {
-  const ParkingLotsListTile({super.key});
+  const ParkingLotsListTile({required this.parkingLot, super.key});
+  final ParkingLot parkingLot;
 
   @override
   State<ParkingLotsListTile> createState() => _ParkingLotsListTileState();
@@ -28,7 +30,7 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
           ),
         ],
       ),
-      title: const Column(
+      title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -37,21 +39,23 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
               Flexible(
                 flex: 7,
                 child: Text(
-                  'LeroPark - Rede Brasileira de Estacionamentos',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  widget.parkingLot.name,
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
                   overflow: TextOverflow.fade,
                 ),
               ),
               Flexible(
                 flex: 3,
                 child: Text(
-                  'R\$ 10,00',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  'R\$ ${widget.parkingLot.valuePerHour}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 7,
           ),
           Row(
@@ -60,15 +64,17 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
               Flexible(
                 flex: 7,
                 child: Text(
-                  'Rua Barão do Rio Branco, 364, Serrana - SP, 14150-000',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                  '${widget.parkingLot.street}, ${widget.parkingLot.number}\n${widget.parkingLot.city} - ${widget.parkingLot.state}, ${widget.parkingLot.zipCode}',
+                  style:
+                      const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
               ),
               Flexible(
                 flex: 3,
                 child: Text(
-                  '500 m',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                  '${widget.parkingLot.distance.toStringAsFixed(2)} km',
+                  style:
+                      const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
               ),
             ],
@@ -76,12 +82,12 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
         ],
       ),
       onTap: () => Navigator.of(context).push(
-                                PageTransition(
-                                  child: const ReservationView(),
-                                  type: PageTransitionType.fade,
-                                  duration: const Duration(milliseconds: 300),
-                                ),
-                              ),
+        PageTransition(
+          child: const ReservationView(),
+          type: PageTransitionType.fade,
+          duration: const Duration(milliseconds: 300),
+        ),
+      ),
     );
   }
 }

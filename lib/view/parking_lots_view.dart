@@ -34,12 +34,6 @@ class _ParkingLotsViewState extends State<ParkingLotsView> {
   PageController _myPageController = PageController(initialPage: 0);
 
   @override
-  void initState() {
-    super.initState();
-    print(AppPosition.getPosition());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,

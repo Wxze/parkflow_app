@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:parkflow_app/models/parking_lot.dart';
+import 'package:parkflow_app/repository/parking_lots_repository.dart';
 import 'package:parkflow_app/view/widgets/parking_lots_list_tile.dart';
 
 class ParkingLotsPage extends StatefulWidget {
@@ -11,111 +15,88 @@ class ParkingLotsPage extends StatefulWidget {
 class _ParkingLotsPageState extends State<ParkingLotsPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Estacionamentos',
-                  style: TextStyle(
-                      color: Color(0xFF35244E),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
-                ),
-                const Text(
-                  'perto de você',
-                  style: TextStyle(
-                      color: Color(0xBF4A326D),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Filtros',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    CircleAvatar(
-                      radius: 18,
-                      backgroundColor: const Color(0xFF583290),
-                      child: IconButton(
-                        onPressed: () {},
-                        splashRadius: 25,
-                        icon: const Icon(
-                          Icons.tune,
-                          size: 20,
-                        ),
-                        color: Colors.white,
+    return RefreshIndicator(
+      onRefresh: _pullRefresh,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Estacionamentos',
+                        style: TextStyle(
+                            color: Color(0xFF35244E),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 22,
-                ),
-                SizedBox(
-                  height: 45,
-                  child: TextFormField(
-                    maxLines: 1,
-                    textInputAction: TextInputAction.search,
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      filled: true,
-                      contentPadding: EdgeInsets.all(12),
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.search),
-                      prefixIconConstraints:
-                          BoxConstraints(minHeight: 32, minWidth: 32),
-                      border: UnderlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        borderSide: BorderSide(color: Colors.white),
+                      Text(
+                        'perto de você',
+                        style: TextStyle(
+                            color: Color(0xBF4A326D),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        borderSide: BorderSide(color: Colors.white),
+                    ],
+                  ),
+                  CircleAvatar(
+                    radius: 18,
+                    backgroundColor: const Color(0xFF583290),
+                    child: IconButton(
+                      onPressed: () {},
+                      splashRadius: 25,
+                      icon: const Icon(
+                        Icons.tune,
+                        size: 20,
                       ),
-                      hintText: 'Pesquisar estacionamentos por localização',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Lato',
-                        fontSize: 14,
-                      ),
-                    ),
-                    style: const TextStyle(
-                      fontFamily: 'Lato',
-                      fontSize: 14,
-                      color: Color(0xFF000000),
+                      color: Colors.white,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          ListView.separated(
-            itemCount: 20,
-            itemBuilder: (context, index) {
-              return const ParkingLotsListTile();
-            },
-            clipBehavior: Clip.none,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(
-                height: 16,
-              );
-            },
-          )
-        ],
+            FutureBuilder<List<ParkingLot>>(
+              future: ParkingLotsRepository().searchByPosition(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                } else if (!snapshot.hasData) {
+                  return const Text('Sem dados disponíveis.');
+                } else {
+                  List<ParkingLot> parkingLots = snapshot.data!;
+                  return ListView.separated(
+                    itemCount: parkingLots.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ParkingLotsListTile(
+                        parkingLot: parkingLots[index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 16,
+                      );
+                    },
+                  );
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  Future<void> _pullRefresh() async {
+    print('refreshed');
   }
 }
