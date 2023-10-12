@@ -25,14 +25,6 @@ class ParkingLotsRepository {
       body: json.encode(body),
     );
 
-    // print(auth['access-token']);
-    // print(auth['token-type']);
-    // print(auth['uid']);
-    // print(auth['expiry']);
-    // print(auth['client']);
-
-    // print('access-token: ${resp.headers["access-token"]}');
-
     List<ParkingLot> parkingLots = [];
     if (resp.statusCode == 200) {
       final data = await json.decode(resp.body.toString());

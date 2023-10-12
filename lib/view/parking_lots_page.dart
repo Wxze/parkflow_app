@@ -1,8 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:parkflow_app/models/parking_lot.dart';
 import 'package:parkflow_app/repository/parking_lots_repository.dart';
+import 'package:parkflow_app/view/widgets/default_card_message.dart';
 import 'package:parkflow_app/view/widgets/parking_lots_list_tile.dart';
 
 class ParkingLotsPage extends StatefulWidget {
@@ -13,11 +12,14 @@ class ParkingLotsPage extends StatefulWidget {
 }
 
 class _ParkingLotsPageState extends State<ParkingLotsPage> {
+  late List<ParkingLot> parkingLots;
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: _pullRefresh,
       child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -69,24 +71,30 @@ class _ParkingLotsPageState extends State<ParkingLotsPage> {
                 } else if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 } else if (!snapshot.hasData) {
-                  return const Text('Sem dados disponíveis.');
+                  return const DefaultCardMessage(
+                      message: 'Não há estacionamentos disponíveis.');
                 } else {
-                  List<ParkingLot> parkingLots = snapshot.data!;
-                  return ListView.separated(
-                    itemCount: parkingLots.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ParkingLotsListTile(
-                        parkingLot: parkingLots[index],
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 16,
-                      );
-                    },
-                  );
+                  parkingLots = snapshot.data!;
+                  if (parkingLots.isNotEmpty) {
+                    return ListView.separated(
+                      itemCount: parkingLots.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ParkingLotsListTile(
+                          parkingLot: parkingLots[index],
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          height: 16,
+                        );
+                      },
+                    );
+                  } else {
+                    return const DefaultCardMessage(
+                        message: 'Não há estacionamentos disponíveis.');
+                  }
                 }
               },
             )
@@ -97,6 +105,10 @@ class _ParkingLotsPageState extends State<ParkingLotsPage> {
   }
 
   Future<void> _pullRefresh() async {
-    print('refreshed');
+    setState(
+      () {
+        parkingLots = parkingLots;
+      },
+    );
   }
 }
