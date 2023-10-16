@@ -27,46 +27,50 @@ class _VehiclesViewState extends State<VehiclesView> {
               fontFamily: 'Galada', color: Colors.white, fontSize: 24),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Meus veículos',
-                        style: TextStyle(
-                          color: Color(0xFF35244E),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+      body: RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Meus veículos',
+                          style: TextStyle(
+                            color: Color(0xFF35244E),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                ListView.separated(
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return const VehiclesListTile();
-                  },
-                  clipBehavior: Clip.none,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 16,
-                    );
-                  },
-                )
-              ],
-            ),
-          ],
+                  ListView.separated(
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return const VehiclesListTile();
+                    },
+                    clipBehavior: Clip.none,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 16,
+                      );
+                    },
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -230,5 +234,9 @@ class _VehiclesViewState extends State<VehiclesView> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _pullRefresh() async {
+    print('refreshed');
   }
 }
