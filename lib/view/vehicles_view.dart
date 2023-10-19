@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:parkflow_app/models/vehicle.dart';
+import 'package:parkflow_app/repository/vehicles_repository.dart';
+import 'package:parkflow_app/view/widgets/default_card_message.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
 import 'package:parkflow_app/view/widgets/vehicles_list_tile.dart';
 
@@ -11,6 +14,7 @@ class VehiclesView extends StatefulWidget {
 
 class _VehiclesViewState extends State<VehiclesView> {
   TextEditingController _defaultController = TextEditingController();
+  late List<Vehicle> vehicles;
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +57,47 @@ class _VehiclesViewState extends State<VehiclesView> {
                       ],
                     ),
                   ),
-                  ListView.separated(
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return const VehiclesListTile();
-                    },
-                    clipBehavior: Clip.none,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 16,
-                      );
+                  FutureBuilder<List<Vehicle>>(
+                    future: VehiclesRepository().getAll(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      } else if (!snapshot.hasData) {
+                        return const DefaultCardMessage(
+                            message: 'Não há veículos cadastrados.');
+                      } else {
+                        vehicles = snapshot.data!;
+                        if (vehicles.isNotEmpty) {
+                          return ListView.separated(
+                            itemCount: vehicles.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return VehiclesListTile(
+                                vehicle: vehicles[index],
+                                resetVehiclesListState: () {
+                                  setState(
+                                    () {
+                                      vehicles = vehicles;
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                height: 16,
+                              );
+                            },
+                          );
+                        } else {
+                          return const DefaultCardMessage(
+                              message: 'Não há veículos cadastrados.');
+                        }
+                      }
                     },
                   )
                 ],
@@ -237,6 +270,10 @@ class _VehiclesViewState extends State<VehiclesView> {
   }
 
   Future<void> _pullRefresh() async {
-    print('refreshed');
+    setState(
+      () {
+        vehicles = vehicles;
+      },
+    );
   }
 }

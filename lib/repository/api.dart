@@ -15,7 +15,10 @@ abstract class ApiRepository {
 
   static const PASSWORD = '${BASE}auth/external_customers/password';
 
-  static const PARKING_LOTS_POSITION = '${BASE}api/app/parking_lots/search_by_position';
+  static const PARKING_LOTS_POSITION =
+      '${BASE}api/app/parking_lots/search_by_position';
+
+  static const VEHICLES = '${BASE}api/app/vehicles';
 
   static Future<Map<String, String>?> getTokenData() async {
     var data = await STORAGE.read(key: 'auth');
