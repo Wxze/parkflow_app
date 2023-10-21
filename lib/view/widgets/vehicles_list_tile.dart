@@ -20,15 +20,17 @@ class _VehiclesListTileState extends State<VehiclesListTile> {
     return ListTile(
       tileColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      leading: const Column(
+      leading: Column(
         children: [
           Expanded(
             child: CircleAvatar(
               radius: 18,
-              backgroundColor: Color(0xFFF0EDF5),
+              backgroundColor: const Color(0xFFF0EDF5),
               child: Icon(
-                Icons.directions_car_rounded,
-                color: Color(0xFF4A326D),
+                widget.vehicle.vehicleType == 'car'
+                    ? Icons.directions_car_rounded
+                    : Icons.two_wheeler_rounded,
+                color: const Color(0xFF4A326D),
               ),
             ),
           ),
