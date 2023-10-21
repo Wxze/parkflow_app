@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:parkflow_app/models/parking_lot.dart';
 import 'package:parkflow_app/view/widgets/reservation_card.dart';
 
 class ReservationView extends StatefulWidget {
-  const ReservationView({super.key});
+  const ReservationView({super.key, required this.parkingLot});
+  final ParkingLot parkingLot;
 
   @override
   State<ReservationView> createState() => _ReservationViewState();
@@ -30,9 +32,9 @@ class _ReservationViewState extends State<ReservationView> {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                'LeroPark',
-                style: TextStyle(
+              Text(
+                widget.parkingLot.name,
+                style: const TextStyle(
                     color: Color(0xFF35244E),
                     fontSize: 24,
                     fontWeight: FontWeight.bold),

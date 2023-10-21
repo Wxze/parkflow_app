@@ -83,7 +83,7 @@ class _ParkingLotsListTileState extends State<ParkingLotsListTile> {
       ),
       onTap: () => Navigator.of(context).push(
         PageTransition(
-          child: const ReservationView(),
+          child: ReservationView(parkingLot: widget.parkingLot),
           type: PageTransitionType.fade,
           duration: const Duration(milliseconds: 300),
         ),
