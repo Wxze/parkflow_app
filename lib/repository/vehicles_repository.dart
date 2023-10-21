@@ -50,4 +50,40 @@ class VehiclesRepository {
 
     return resp;
   }
+
+  Future<Response> addVehicle(Vehicle vehicle) async {
+    Map<String, String>? auth = await ApiRepository.getTokenData();
+    int vehicleTypeToNumber = 0;
+
+    if(vehicle.vehicleType.toUpperCase() == 'CARRO'){
+      vehicleTypeToNumber = 0;
+    }
+
+    if(vehicle.vehicleType.toUpperCase() == 'MOTO'){
+      vehicleTypeToNumber = 1;
+    }
+
+    Map body = {
+      'license_plate': vehicle.licensePlate.toUpperCase(),  
+      'brand': vehicle.brand,
+      'model': vehicle.model,
+      'color': vehicle.color,
+      'vehicle_type': vehicleTypeToNumber,
+    };
+
+    var resp = await post(
+      Uri.parse(ApiRepository.VEHICLES),
+      headers: <String, String>{
+        'Content-Type': 'application/json;charset=UTF-8',
+        'access-token': auth!['access-token'] ?? '',
+        'token-type': auth['token-type'] ?? '',
+        'uid': auth['uid'] ?? '',
+        'expiry': auth['expiry'] ?? '',
+        'client': auth['client'] ?? '',
+      },
+      body: json.encode(body),
+    );
+
+    return resp;
+  }
 }

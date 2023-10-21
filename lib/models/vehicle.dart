@@ -6,17 +6,22 @@ class Vehicle {
   final String color;
   final String vehicleType;
 
-  Vehicle(this.id, this.licensePlate, this.brand, this.model, this.color,
-      this.vehicleType);
+  Vehicle(
+      {this.id = '',
+      required this.licensePlate,
+      required this.brand,
+      required this.model,
+      required this.color,
+      required this.vehicleType});
 
   factory Vehicle.fromJson(Map<String, dynamic> json) {
     return Vehicle(
-      json['id'],
-      json['license_plate'],
-      json['brand'],
-      json['model'],
-      json['color'],
-      json['vehicle_type'],
+      id: json['id'],
+      licensePlate: json['license_plate'],
+      brand: json['brand'],
+      model: json['model'],
+      color: json['color'],
+      vehicleType: json['vehicle_type'],
     );
   }
 }

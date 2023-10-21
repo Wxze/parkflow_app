@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:parkflow_app/models/vehicle.dart';
 import 'package:parkflow_app/repository/vehicles_repository.dart';
 import 'package:parkflow_app/view/widgets/default_card_message.dart';
 import 'package:parkflow_app/view/widgets/default_text_field.dart';
+import 'package:parkflow_app/view/widgets/masked_text_field.dart';
 import 'package:parkflow_app/view/widgets/vehicles_list_tile.dart';
+
+import '../utils/regex.dart';
 
 class VehiclesView extends StatefulWidget {
   const VehiclesView({super.key});
@@ -13,8 +20,13 @@ class VehiclesView extends StatefulWidget {
 }
 
 class _VehiclesViewState extends State<VehiclesView> {
-  TextEditingController _defaultController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late List<Vehicle> vehicles;
+  TextEditingController _licensePlateController = TextEditingController();
+  TextEditingController _brandController = TextEditingController();
+  TextEditingController _modelController = TextEditingController();
+  TextEditingController _colorController = TextEditingController();
+  TextEditingController _vehicleTypeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -113,152 +125,237 @@ class _VehiclesViewState extends State<VehiclesView> {
             context: context,
             builder: (context) {
               return Dialog(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Número de placa',
-                            style: TextStyle(
-                                color: Color(0xFF4F2D82),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          DefaultTextField(
-                            formController: _defaultController,
-                            icon: Icons.abc,
-                            hintText: 'BRA2E19',
-                            isPasswordField: false,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text(
-                            'Marca',
-                            style: TextStyle(
-                                color: Color(0xFF4F2D82),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          DefaultTextField(
-                            formController: _defaultController,
-                            icon: Icons.branding_watermark_outlined,
-                            hintText: 'Honda',
-                            isPasswordField: false,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text(
-                            'Modelo',
-                            style: TextStyle(
-                                color: Color(0xFF4F2D82),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          DefaultTextField(
-                            formController: _defaultController,
-                            icon: Icons.branding_watermark_outlined,
-                            hintText: 'Civic',
-                            isPasswordField: false,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text(
-                            'Cor',
-                            style: TextStyle(
-                                color: Color(0xFF4F2D82),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          DefaultTextField(
-                            formController: _defaultController,
-                            icon: Icons.colorize,
-                            hintText: 'Preto',
-                            isPasswordField: false,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Text(
-                            'Tipo de veículo',
-                            style: TextStyle(
-                                color: Color(0xFF4F2D82),
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          DefaultTextField(
-                            formController: _defaultController,
-                            icon: Icons.directions_car_rounded,
-                            hintText: 'Carro',
-                            isPasswordField: false,
-                          ),
-                          const SizedBox(
-                            height: 26,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 30),
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    side: MaterialStateProperty.all(
-                                      const BorderSide(
-                                        color: Color(0xFF583290),
-                                      ),
-                                    ),
-                                    backgroundColor: MaterialStateProperty.all(
-                                      const Color(0xFFFFFFFF),
-                                    ),
+                              const Text(
+                                'Número de placa',
+                                style: TextStyle(
+                                    color: Color(0xFF4F2D82),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              SizedBox(
+                                child: MaskedTextField(
+                                  controller: _licensePlateController,
+                                  text: 'BRA2E19',
+                                  icon: Icons.abc,
+                                  isPasswordField: false,
+                                  maskFormatter: MaskTextInputFormatter(
+                                    mask: '#######',
+                                    filter: {"#": RegExp(r'[0-9A-Za-z]')},
+                                    type: MaskAutoCompletionType.lazy,
                                   ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Preencha este campo';
+                                    }
+                                    if (!RegExp(Regex.licensePlate)
+                                        .hasMatch(value.toUpperCase())) {
+                                      return 'Número de placa inválido';
+                                    }
+                                    return null;
                                   },
-                                  child: const Text(
-                                    'Cancelar',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Color(0xFF583290)),
-                                  ),
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'Adicionar',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text(
+                                'Marca',
+                                style: TextStyle(
+                                    color: Color(0xFF4F2D82),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              DefaultTextField(
+                                formController: _brandController,
+                                icon: Icons.branding_watermark_outlined,
+                                hintText: 'Honda',
+                                isPasswordField: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preencha este campo';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text(
+                                'Modelo',
+                                style: TextStyle(
+                                    color: Color(0xFF4F2D82),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              DefaultTextField(
+                                formController: _modelController,
+                                icon: Icons.branding_watermark_outlined,
+                                hintText: 'Civic',
+                                isPasswordField: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preencha este campo';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text(
+                                'Cor',
+                                style: TextStyle(
+                                    color: Color(0xFF4F2D82),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              DefaultTextField(
+                                formController: _colorController,
+                                icon: Icons.colorize,
+                                hintText: 'Preto',
+                                isPasswordField: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preencha este campo';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text(
+                                'Tipo de veículo',
+                                style: TextStyle(
+                                    color: Color(0xFF4F2D82),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              DefaultTextField(
+                                formController: _vehicleTypeController,
+                                icon: Icons.directions_car_rounded,
+                                hintText: 'Carro / Moto',
+                                isPasswordField: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Preencha este campo';
+                                  }
+                                  if (value.toUpperCase() != 'CARRO' &&
+                                      value.toUpperCase() != 'MOTO') {
+                                    print(value.toUpperCase());
+                                    return "O tipo de veículo deve ser 'Carro' ou 'Moto'";
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(
+                                height: 26,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                            color: Color(0xFF583290),
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          const Color(0xFFFFFFFF),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text(
+                                        'Cancelar',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            color: Color(0xFF583290)),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        if (formKey.currentState!.validate()) {
+                                          Vehicle formVehicle = Vehicle(
+                                              id: '',
+                                              licensePlate:
+                                                  _licensePlateController.text
+                                                      .toUpperCase(),
+                                              brand: _brandController.text,
+                                              model: _modelController.text,
+                                              color: _colorController.text,
+                                              vehicleType:
+                                                  _vehicleTypeController.text);
+
+                                          Response resp =
+                                              await VehiclesRepository()
+                                                  .addVehicle(formVehicle);
+
+                                          if (resp.statusCode == 200 ||
+                                              resp.statusCode == 201) {
+                                            showSucessSnackBar(
+                                                'Veículo cadastrado com sucesso!');
+                                            _pullRefresh();
+                                            redirectUser();
+                                          } else {
+                                            final data = await json
+                                                .decode(resp.body.toString());
+
+                                            redirectUser();
+                                            showErrorSnackBar(
+                                                "O número de placa ${data['errors']['fields']['license_plate'].join(',\n')}.");
+                                          }
+                                        }
+                                      },
+                                      child: const Text(
+                                        'Adicionar',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -275,5 +372,39 @@ class _VehiclesViewState extends State<VehiclesView> {
         vehicles = vehicles;
       },
     );
+  }
+
+  void redirectUser() {
+    Navigator.of(context).pop();
+  }
+
+  void showSucessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.check_circle,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: const Color(0xFF44A33C),
+    ));
+  }
+
+  void showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.error,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: Colors.red,
+    ));
   }
 }
