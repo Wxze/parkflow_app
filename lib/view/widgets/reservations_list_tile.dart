@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../models/reservation.dart';
+
 class ReservationsListTile extends StatefulWidget {
-  const ReservationsListTile({super.key});
+  const ReservationsListTile({super.key, required this.reservation});
+  final Reservation reservation;
 
   @override
   State<ReservationsListTile> createState() => _ReservationsListTileState();
@@ -10,9 +13,9 @@ class ReservationsListTile extends StatefulWidget {
 class _ReservationsListTileState extends State<ReservationsListTile> {
   @override
   Widget build(BuildContext context) {
-    return const ListTile(
+    return ListTile(
       tileColor: Colors.white,
-      leading: Column(
+      leading: const Column(
         children: [
           Expanded(
             child: CircleAvatar(
@@ -35,29 +38,42 @@ class _ReservationsListTileState extends State<ReservationsListTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Reserva em LeroPark - Rede Brasileira de Estacionamentos',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  'Reserva em ${widget.reservation.parkingLotName}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
                   overflow: TextOverflow.fade,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 7,
                 ),
                 Text(
-                  'Chegar em 20/10/2023, 10:09h',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                  'Chegar em ${widget.reservation.checkinDate}',
+                  style:
+                      const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
                 Text(
-                  'Honda Civic - BRA2E19',
-                  style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                  '${widget.reservation.vehicleBrand} ${widget.reservation.vehicleModel} - ${widget.reservation.vehicleLicensePlate}',
+                  style:
+                      const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
               ],
             ),
           ),
           Flexible(
             flex: 5,
-            child: Text(
-              'Vaga 5A',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            child: Column(
+              children: [
+                Text(
+                  'Vaga - ${widget.reservation.vacancyNumber}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  'Seção - ${widget.reservation.sectionName}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
           ),
         ],

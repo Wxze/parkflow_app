@@ -41,6 +41,7 @@ dependencies:
   http: ^1.1.0
   mask_text_input_formatter: ^2.5.0
   geolocator: ^10.1.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
