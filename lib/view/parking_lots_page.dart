@@ -23,12 +23,12 @@ class _ParkingLotsPageState extends State<ParkingLotsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -46,19 +46,6 @@ class _ParkingLotsPageState extends State<ParkingLotsPage> {
                             fontWeight: FontWeight.w500),
                       ),
                     ],
-                  ),
-                  CircleAvatar(
-                    radius: 18,
-                    backgroundColor: const Color(0xFF583290),
-                    child: IconButton(
-                      onPressed: () {},
-                      splashRadius: 25,
-                      icon: const Icon(
-                        Icons.tune,
-                        size: 20,
-                      ),
-                      color: Colors.white,
-                    ),
                   ),
                 ],
               ),

@@ -1,4 +1,6 @@
-class ParkingLot{
+import 'package:intl/intl.dart';
+
+class ParkingLot {
   final String id;
   final String name;
   final String email;
@@ -12,14 +14,33 @@ class ParkingLot{
   final String number;
   final double distance;
 
-  ParkingLot(this.id, this.name, this.email, this.valuePerHour, this.phone, this.zipCode, this.city, this.street, this.neighborhood, this.state, this.number, this.distance);
+  ParkingLot(
+      this.id,
+      this.name,
+      this.email,
+      this.valuePerHour,
+      this.phone,
+      this.zipCode,
+      this.city,
+      this.street,
+      this.neighborhood,
+      this.state,
+      this.number,
+      this.distance);
 
   factory ParkingLot.fromJson(Map<String, dynamic> json) {
+    double valuePerHourtoDouble =
+        double.parse(json['billing_detail']['value_per_hour']);
+
+    NumberFormat formatoComVirgula = NumberFormat.decimalPattern('pt_BR');
+    String valuePerHourFormatado =
+        formatoComVirgula.format(valuePerHourtoDouble);
+
     return ParkingLot(
       json['id'],
       json['name'],
       json['email'],
-      json['billing_detail']['value_per_hour'],
+      valuePerHourFormatado,
       json['phone'],
       json['zip_code'],
       json['city'],
