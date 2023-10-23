@@ -1,4 +1,6 @@
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:parkflow_app/models/parking_lot.dart';
 import 'package:parkflow_app/view/widgets/reservation_card.dart';
 
@@ -11,6 +13,10 @@ class ReservationView extends StatefulWidget {
 }
 
 class _ReservationViewState extends State<ReservationView> {
+  final format = DateFormat("dd/MM/yyyy HH:mm");
+  DateTime selectedDate = DateTime.now();
+  TextEditingController _dateTimeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,12 +38,16 @@ class _ReservationViewState extends State<ReservationView> {
               const SizedBox(
                 height: 10,
               ),
-              Text(
-                widget.parkingLot.name,
-                style: const TextStyle(
-                    color: Color(0xFF35244E),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  widget.parkingLot.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Color(0xFF35244E),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               const SizedBox(
                 height: 40,
@@ -55,10 +65,118 @@ class _ReservationViewState extends State<ReservationView> {
                   },
                 ),
               ),
+              const SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Card(
+                      elevation: 5,
+                      child: DateTimeField(
+                        controller: _dateTimeController,
+                        format: format,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: Icon(Icons.calendar_month),
+                          // prefixIconConstraints:
+                          //     BoxConstraints(minHeight: 32, minWidth: 32),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            width: 2,
+                            color: Color(0xFF583290),
+                          )),
+                          labelText: "Selecione a data da reserva",
+                          labelStyle: TextStyle(fontSize: 15),
+                          hintStyle: TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 14,
+                          ),
+                        ),
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2000),
+                            initialDate: currentValue ?? DateTime.now(),
+                            lastDate: DateTime(2101),
+                          ).then((date) {
+                            if (date == null) return null;
+                            return showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(
+                                  currentValue ?? DateTime.now()),
+                            ).then((time) {
+                              if (time == null) return null;
+                              return DateTimeField.combine(date, time);
+                            });
+                          });
+                        },
+                        onChanged: (date) {
+                          setState(() {
+                            selectedDate = date ?? DateTime.now();
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        color: const Color(0xFF583290),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () {
+                print(_dateTimeController.text);
+              },
+              child: const Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Reservar',
+                    style: TextStyle(
+                        color: Color(0xFF583290),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 5),
+                  Icon(Icons.check_circle, color: Color(0xFF583290), size: 20)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
   }
 }
