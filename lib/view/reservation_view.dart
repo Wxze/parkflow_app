@@ -2,7 +2,11 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parkflow_app/models/parking_lot.dart';
-import 'package:parkflow_app/view/widgets/reservation_card.dart';
+import 'package:parkflow_app/models/vacancy.dart';
+import 'package:parkflow_app/repository/vacancies_repository.dart';
+import 'package:parkflow_app/view/widgets/default_vacancy_card_message.dart';
+import 'package:parkflow_app/view/widgets/vacancy_card.dart';
+import 'package:parkflow_app/view/widgets/vehicle_card.dart';
 
 class ReservationView extends StatefulWidget {
   const ReservationView({super.key, required this.parkingLot});
@@ -16,6 +20,7 @@ class _ReservationViewState extends State<ReservationView> {
   final format = DateFormat("dd/MM/yyyy HH:mm");
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateTimeController = TextEditingController();
+  late List<Vacancy> vacancies;
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +55,88 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Selecione a vaga desejada',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF35244E),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 150,
+                child: FutureBuilder<List<Vacancy>>(
+                  future: VacanciesRepository().getAll(widget.parkingLot.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    } else if (!snapshot.hasData) {
+                      return const DefaultVacancyCardMessage(
+                          message: 'Não há vagas disponíveis.');
+                    } else {
+                      vacancies = snapshot.data!;
+                      if (vacancies.isNotEmpty) {
+                        return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: vacancies.length,
+                          itemBuilder: (context, index) {
+                            return VacancyCard(
+                              vacancy: vacancies[index],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(width: 5);
+                          },
+                        );
+                      } else {
+                        return const DefaultVacancyCardMessage(
+                            message: 'Não há vagas disponíveis.');
+                      }
+                    }
+                  },
+                ),
+              ),
+              // SizedBox(
+              //   height: 150,
+              //   child: ListView.separated(
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: 15,
+              //     itemBuilder: (context, index) {
+              //       return const VacancyCard();
+              //     },
+              //     separatorBuilder: (BuildContext context, int index) {
+              //       return const SizedBox(width: 5);
+              //     },
+              //   ),
+              // ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Selecione seu veículo',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF35244E),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 150,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 15,
+                  itemCount: 2,
                   itemBuilder: (context, index) {
-                    return const ReservationCard();
+                    return const VehicleCard();
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(width: 5);
@@ -66,14 +144,14 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 46,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
                     Card(
-                      elevation: 5,
+                      elevation: 3,
                       child: DateTimeField(
                         controller: _dateTimeController,
                         format: format,
@@ -89,7 +167,7 @@ class _ReservationViewState extends State<ReservationView> {
                             width: 2,
                             color: Color(0xFF583290),
                           )),
-                          labelText: "Selecione a data da reserva",
+                          labelText: "Clique para informar a data da reserva",
                           labelStyle: TextStyle(fontSize: 15),
                           hintStyle: TextStyle(
                             fontFamily: 'Lato',
@@ -142,12 +220,18 @@ class _ReservationViewState extends State<ReservationView> {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 DateTime data = DateFormat("dd/MM/yyyy HH:mm")
                     .parse(_dateTimeController.text);
                 String dataFormatada =
                     DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
                 print(dataFormatada);
+
+                List<Vacancy> vacancies =
+                    await VacanciesRepository().getAll(widget.parkingLot.id);
+                for (var vacancy in vacancies) {
+                  print(vacancy.number);
+                }
               },
               child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

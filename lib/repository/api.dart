@@ -22,6 +22,8 @@ abstract class ApiRepository {
 
   static const RESERVATIONS = '${BASE}api/app/reservations';
 
+  static const VACANCIES = '${BASE}api/app/vacancies';
+
   static Future<Map<String, String>?> getTokenData() async {
     var data = await STORAGE.read(key: 'auth');
 
