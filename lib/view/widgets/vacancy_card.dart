@@ -47,6 +47,7 @@ class _VacancyCardState extends State<VacancyCard> {
               const SizedBox(height: 10),
               Text(
                 '${widget.vacancy.number} ${widget.vacancy.sectionName}',
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,

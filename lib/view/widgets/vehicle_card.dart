@@ -35,27 +35,29 @@ class _VehicleCardState extends State<VehicleCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    widget.vehicle.vehicleType == 'car'
-                        ? Icons.directions_car_rounded
-                        : Icons.two_wheeler_rounded,
-                    color: const Color(0xFF4A326D),
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    '${widget.vehicle.brand} ${widget.vehicle.model}',
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                ],
+              Icon(
+                widget.vehicle.vehicleType == 'car'
+                    ? Icons.directions_car_rounded
+                    : Icons.two_wheeler_rounded,
+                color: const Color(0xFF4A326D),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                widget.vehicle.brand,
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                widget.vehicle.model,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Text(
                 widget.vehicle.licensePlate,
-                style: TextStyle(
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF583290)),
