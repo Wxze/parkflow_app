@@ -18,12 +18,12 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _password1Controller = TextEditingController();
-  TextEditingController _password2Controller = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _password1Controller = TextEditingController();
+  final TextEditingController _password2Controller = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

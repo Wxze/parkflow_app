@@ -14,8 +14,8 @@ class AccountView extends StatefulWidget {
 
 class _AccountViewState extends State<AccountView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +140,7 @@ class _AccountViewState extends State<AccountView> {
                                       onPressed: () async {
                                         FocusManager.instance.primaryFocus
                                             ?.unfocus();
-                                        if (formKey.currentState!.validate()) {
-                                          print('form alter valid');
-                                        }
+                                        if (formKey.currentState!.validate()) {}
                                       },
                                       child: const Text(
                                         'Salvar alterações',

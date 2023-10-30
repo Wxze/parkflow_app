@@ -22,7 +22,7 @@ class ReservationView extends StatefulWidget {
 class _ReservationViewState extends State<ReservationView> {
   final format = DateFormat("dd/MM/yyyy HH:mm");
   DateTime selectedDate = DateTime.now();
-  TextEditingController _dateTimeController = TextEditingController();
+  final TextEditingController _dateTimeController = TextEditingController();
   late List<Vacancy> vacancies;
   String selectedVacancyCardId = '';
   String selectedVehicleCardId = '';

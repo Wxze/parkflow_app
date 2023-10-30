@@ -22,11 +22,11 @@ class VehiclesView extends StatefulWidget {
 class _VehiclesViewState extends State<VehiclesView> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late List<Vehicle> vehicles;
-  TextEditingController _licensePlateController = TextEditingController();
-  TextEditingController _brandController = TextEditingController();
-  TextEditingController _modelController = TextEditingController();
-  TextEditingController _colorController = TextEditingController();
-  TextEditingController _vehicleTypeController = TextEditingController();
+  final TextEditingController _licensePlateController = TextEditingController();
+  final TextEditingController _brandController = TextEditingController();
+  final TextEditingController _modelController = TextEditingController();
+  final TextEditingController _colorController = TextEditingController();
+  final TextEditingController _vehicleTypeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -264,7 +264,6 @@ class _VehiclesViewState extends State<VehiclesView> {
                                   }
                                   if (value.toUpperCase() != 'CARRO' &&
                                       value.toUpperCase() != 'MOTO') {
-                                    print(value.toUpperCase());
                                     return "O tipo de veículo deve ser 'Carro' ou 'Moto'";
                                   }
                                   return null;
