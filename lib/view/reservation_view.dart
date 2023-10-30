@@ -21,6 +21,7 @@ class _ReservationViewState extends State<ReservationView> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateTimeController = TextEditingController();
   late List<Vacancy> vacancies;
+  String selectedCardId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               SizedBox(
-                height: 150,
+                height: 135,
                 child: FutureBuilder<List<Vacancy>>(
                   future: VacanciesRepository().getAll(widget.parkingLot.id),
                   builder: (context, snapshot) {
@@ -89,6 +90,12 @@ class _ReservationViewState extends State<ReservationView> {
                           itemBuilder: (context, index) {
                             return VacancyCard(
                               vacancy: vacancies[index],
+                              isSelected: vacancies[index].id == selectedCardId,
+                              onCardTapped: () {
+                                setState(() {
+                                  selectedCardId = vacancies[index].id;
+                                });
+                              },
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -131,7 +138,7 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               SizedBox(
-                height: 150,
+                height: 135,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: 2,
@@ -227,11 +234,7 @@ class _ReservationViewState extends State<ReservationView> {
                     DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
                 print(dataFormatada);
 
-                List<Vacancy> vacancies =
-                    await VacanciesRepository().getAll(widget.parkingLot.id);
-                for (var vacancy in vacancies) {
-                  print(vacancy.number);
-                }
+                print('ID do Card Selecionado: $selectedCardId');
               },
               child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

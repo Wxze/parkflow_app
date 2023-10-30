@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ReservationCard extends StatefulWidget {
-  const ReservationCard({super.key});
+class VehicleCard extends StatefulWidget {
+  const VehicleCard({super.key});
 
   @override
-  State<ReservationCard> createState() => _ReservationCardState();
+  State<VehicleCard> createState() => _VehicleCardState();
 }
 
-class _ReservationCardState extends State<ReservationCard> {
+class _VehicleCardState extends State<VehicleCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -18,7 +18,7 @@ class _ReservationCardState extends State<ReservationCard> {
             top: BorderSide(color: Color(0xFF69479B), width: 5),
           ),
         ),
-        width: 170,
+        width: 165,
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -28,16 +28,16 @@ class _ReservationCardState extends State<ReservationCard> {
                 Icon(Icons.directions_car_rounded),
                 SizedBox(width: 5),
                 Text(
-                  'Vaga',
+                  'BMW M3',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             SizedBox(height: 10),
             Text(
-              '5A',
+              'BRA1234',
               style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF583290)),
             ),
