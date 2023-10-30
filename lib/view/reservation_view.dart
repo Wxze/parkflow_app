@@ -8,6 +8,9 @@ import 'package:parkflow_app/view/widgets/default_vacancy_card_message.dart';
 import 'package:parkflow_app/view/widgets/vacancy_card.dart';
 import 'package:parkflow_app/view/widgets/vehicle_card.dart';
 
+import '../models/vehicle.dart';
+import '../repository/vehicles_repository.dart';
+
 class ReservationView extends StatefulWidget {
   const ReservationView({super.key, required this.parkingLot});
   final ParkingLot parkingLot;
@@ -21,7 +24,10 @@ class _ReservationViewState extends State<ReservationView> {
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateTimeController = TextEditingController();
   late List<Vacancy> vacancies;
-  String selectedCardId = '';
+  String selectedVacancyCardId = '';
+  String selectedVehicleCardId = '';
+
+  late List<Vehicle> vehicles;
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +96,11 @@ class _ReservationViewState extends State<ReservationView> {
                           itemBuilder: (context, index) {
                             return VacancyCard(
                               vacancy: vacancies[index],
-                              isSelected: vacancies[index].id == selectedCardId,
+                              isSelected:
+                                  vacancies[index].id == selectedVacancyCardId,
                               onCardTapped: () {
                                 setState(() {
-                                  selectedCardId = vacancies[index].id;
+                                  selectedVacancyCardId = vacancies[index].id;
                                 });
                               },
                             );
@@ -110,19 +117,6 @@ class _ReservationViewState extends State<ReservationView> {
                   },
                 ),
               ),
-              // SizedBox(
-              //   height: 150,
-              //   child: ListView.separated(
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: 15,
-              //     itemBuilder: (context, index) {
-              //       return const VacancyCard();
-              //     },
-              //     separatorBuilder: (BuildContext context, int index) {
-              //       return const SizedBox(width: 5);
-              //     },
-              //   ),
-              // ),
               const SizedBox(
                 height: 30,
               ),
@@ -139,14 +133,45 @@ class _ReservationViewState extends State<ReservationView> {
               ),
               SizedBox(
                 height: 135,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return const VehicleCard();
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(width: 5);
+                child: FutureBuilder<List<Vehicle>>(
+                  future: VehiclesRepository().getAll(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    } else if (!snapshot.hasData) {
+                      return const DefaultVacancyCardMessage(
+                          message: 'Não há veículos cadastrados.');
+                    } else {
+                      vehicles = snapshot.data!;
+                      if (vehicles.isNotEmpty) {
+                        return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: vehicles.length,
+                          itemBuilder: (context, index) {
+                            return VehicleCard(
+                              vehicle: vehicles[index],
+                              isSelected:
+                                  vehicles[index].id == selectedVehicleCardId,
+                              onCardTapped: () {
+                                setState(() {
+                                  selectedVehicleCardId = vehicles[index].id;
+                                });
+                              },
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 16,
+                            );
+                          },
+                        );
+                      } else {
+                        return const DefaultVacancyCardMessage(
+                            message: 'Não há veículos cadastrados.');
+                      }
+                    }
                   },
                 ),
               ),
@@ -234,7 +259,8 @@ class _ReservationViewState extends State<ReservationView> {
                     DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
                 print(dataFormatada);
 
-                print('ID do Card Selecionado: $selectedCardId');
+                print('ID Vaga: $selectedVacancyCardId');
+                print('ID Veículo: $selectedVehicleCardId');
               },
               child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

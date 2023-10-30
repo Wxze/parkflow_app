@@ -46,7 +46,6 @@ class _VacancyCardState extends State<VacancyCard> {
               ),
               const SizedBox(height: 10),
               Text(
-                // '5A',
                 '${widget.vacancy.number} ${widget.vacancy.sectionName}',
                 style: const TextStyle(
                     fontSize: 25,

@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import '../../models/vehicle.dart';
 
 class VehicleCard extends StatefulWidget {
-  const VehicleCard({super.key});
+  const VehicleCard(
+      {super.key,
+      required this.vehicle,
+      required this.isSelected,
+      required this.onCardTapped});
+  final Vehicle vehicle;
+  final bool isSelected;
+  final Function onCardTapped;
 
   @override
   State<VehicleCard> createState() => _VehicleCardState();
@@ -10,38 +18,50 @@ class VehicleCard extends StatefulWidget {
 class _VehicleCardState extends State<VehicleCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      child: Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Color(0xFF69479B), width: 5),
+    return GestureDetector(
+      onTap: () {
+        widget.onCardTapped();
+      },
+      child: Card(
+        elevation: 3,
+        child: Container(
+          decoration: BoxDecoration(
+            color: widget.isSelected ? const Color(0x40583290) : Colors.white,
+            border: const Border(
+              top: BorderSide(color: Color(0xFF69479B), width: 5),
+            ),
           ),
-        ),
-        width: 165,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.directions_car_rounded),
-                SizedBox(width: 5),
-                Text(
-                  'BMW M3',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Text(
-              'BRA1234',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF583290)),
-            ),
-          ],
+          width: 165,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                widget.vehicle.vehicleType == 'car'
+                    ? Icons.directions_car_rounded
+                    : Icons.two_wheeler_rounded,
+                color: const Color(0xFF4A326D),
+              ),
+                  const SizedBox(width: 5),
+                  Text(
+                    // 'BMW M3',
+                    '${widget.vehicle.brand} ${widget.vehicle.model}',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Text(
+                'BRA1234',
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF583290)),
+              ),
+            ],
+          ),
         ),
       ),
     );
