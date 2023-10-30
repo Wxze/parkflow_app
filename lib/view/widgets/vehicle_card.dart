@@ -39,22 +39,22 @@ class _VehicleCardState extends State<VehicleCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                widget.vehicle.vehicleType == 'car'
-                    ? Icons.directions_car_rounded
-                    : Icons.two_wheeler_rounded,
-                color: const Color(0xFF4A326D),
-              ),
+                    widget.vehicle.vehicleType == 'car'
+                        ? Icons.directions_car_rounded
+                        : Icons.two_wheeler_rounded,
+                    color: const Color(0xFF4A326D),
+                  ),
                   const SizedBox(width: 5),
                   Text(
-                    // 'BMW M3',
                     '${widget.vehicle.brand} ${widget.vehicle.model}',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
-                'BRA1234',
+                widget.vehicle.licensePlate,
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
