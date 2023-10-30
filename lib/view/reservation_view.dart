@@ -162,9 +162,7 @@ class _ReservationViewState extends State<ReservationView> {
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              height: 16,
-                            );
+                            return const SizedBox(width: 5);
                           },
                         );
                       } else {
