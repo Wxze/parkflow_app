@@ -32,4 +32,27 @@ class ReservationsRepository {
 
     return reservations;
   }
+
+  Future<Response> createReservation(String vacancyId, String vehicleID, String checkinDate) async {
+    Map<String, String>? auth = await ApiRepository.getTokenData();
+
+    Map body = {
+      "reservation": {"vacancy_id": vacancyId, "vehicle_id": vehicleID, "checkin_date": checkinDate}
+    };
+
+    var resp = await post(
+      Uri.parse(ApiRepository.RESERVATIONS),
+      headers: <String, String>{
+        'Content-Type': 'application/json;charset=UTF-8',
+        'access-token': auth!['access-token'] ?? '',
+        'token-type': auth['token-type'] ?? '',
+        'uid': auth['uid'] ?? '',
+        'expiry': auth['expiry'] ?? '',
+        'client': auth['client'] ?? '',
+      },
+      body: json.encode(body),
+    );
+
+    return resp;
+  }
 }

@@ -39,8 +39,7 @@ class _VehiclesViewState extends State<VehiclesView> {
         automaticallyImplyLeading: true,
         title: const Text(
           'ParkFlow',
-          style: TextStyle(
-              fontFamily: 'Galada', color: Colors.white, fontSize: 24),
+          style: TextStyle(fontFamily: 'Galada', color: Colors.white, fontSize: 24),
         ),
       ),
       body: RefreshIndicator(
@@ -77,8 +76,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       } else if (!snapshot.hasData) {
-                        return const DefaultCardMessage(
-                            message: 'Não há veículos cadastrados.');
+                        return const DefaultCardMessage(message: 'Não há veículos cadastrados.');
                       } else {
                         vehicles = snapshot.data!;
                         if (vehicles.isNotEmpty) {
@@ -98,16 +96,14 @@ class _VehiclesViewState extends State<VehiclesView> {
                                 },
                               );
                             },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
+                            separatorBuilder: (BuildContext context, int index) {
                               return const SizedBox(
                                 height: 16,
                               );
                             },
                           );
                         } else {
-                          return const DefaultCardMessage(
-                              message: 'Não há veículos cadastrados.');
+                          return const DefaultCardMessage(message: 'Não há veículos cadastrados.');
                         }
                       }
                     },
@@ -130,8 +126,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 30),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                         child: Form(
                           key: formKey,
                           child: Column(
@@ -139,9 +134,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                             children: [
                               const Text(
                                 'Número de placa',
-                                style: TextStyle(
-                                    color: Color(0xFF4F2D82),
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Color(0xFF4F2D82), fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -161,8 +154,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                                     if (value == null || value.isEmpty) {
                                       return 'Preencha este campo';
                                     }
-                                    if (!RegExp(Regex.licensePlate)
-                                        .hasMatch(value.toUpperCase())) {
+                                    if (!RegExp(Regex.licensePlate).hasMatch(value.toUpperCase())) {
                                       return 'Número de placa inválido';
                                     }
                                     return null;
@@ -174,9 +166,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                               ),
                               const Text(
                                 'Marca',
-                                style: TextStyle(
-                                    color: Color(0xFF4F2D82),
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Color(0xFF4F2D82), fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -198,9 +188,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                               ),
                               const Text(
                                 'Modelo',
-                                style: TextStyle(
-                                    color: Color(0xFF4F2D82),
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Color(0xFF4F2D82), fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -222,9 +210,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                               ),
                               const Text(
                                 'Cor',
-                                style: TextStyle(
-                                    color: Color(0xFF4F2D82),
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Color(0xFF4F2D82), fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -246,9 +232,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                               ),
                               const Text(
                                 'Tipo de veículo',
-                                style: TextStyle(
-                                    color: Color(0xFF4F2D82),
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Color(0xFF4F2D82), fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -262,8 +246,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                                   if (value == null || value.isEmpty) {
                                     return 'Preencha este campo';
                                   }
-                                  if (value.toUpperCase() != 'CARRO' &&
-                                      value.toUpperCase() != 'MOTO') {
+                                  if (value.toUpperCase() != 'CARRO' && value.toUpperCase() != 'MOTO') {
                                     return "O tipo de veículo deve ser 'Carro' ou 'Moto'";
                                   }
                                   return null;
@@ -273,8 +256,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                                 height: 26,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: ElevatedButton(
@@ -284,8 +266,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                                             color: Color(0xFF583290),
                                           ),
                                         ),
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
+                                        backgroundColor: MaterialStateProperty.all(
                                           const Color(0xFFFFFFFF),
                                         ),
                                       ),
@@ -294,10 +275,7 @@ class _VehiclesViewState extends State<VehiclesView> {
                                       },
                                       child: const Text(
                                         'Cancelar',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            color: Color(0xFF583290)),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF583290)),
                                       ),
                                     ),
                                   ),
@@ -305,45 +283,33 @@ class _VehiclesViewState extends State<VehiclesView> {
                                   Expanded(
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
+                                        FocusManager.instance.primaryFocus?.unfocus();
                                         if (formKey.currentState!.validate()) {
                                           Vehicle formVehicle = Vehicle(
                                               id: '',
-                                              licensePlate:
-                                                  _licensePlateController.text
-                                                      .toUpperCase(),
+                                              licensePlate: _licensePlateController.text.toUpperCase(),
                                               brand: _brandController.text,
                                               model: _modelController.text,
                                               color: _colorController.text,
-                                              vehicleType:
-                                                  _vehicleTypeController.text);
+                                              vehicleType: _vehicleTypeController.text);
 
-                                          Response resp =
-                                              await VehiclesRepository()
-                                                  .addVehicle(formVehicle);
+                                          Response resp = await VehiclesRepository().addVehicle(formVehicle);
 
-                                          if (resp.statusCode == 200 ||
-                                              resp.statusCode == 201) {
-                                            showSucessSnackBar(
-                                                'Veículo cadastrado com sucesso!');
+                                          if (resp.statusCode == 200 || resp.statusCode == 201) {
+                                            showSucessSnackBar('Veículo cadastrado com sucesso!');
                                             _pullRefresh();
                                             redirectUser();
                                           } else {
-                                            final data = await json
-                                                .decode(resp.body.toString());
+                                            final data = await json.decode(resp.body.toString());
 
                                             redirectUser();
-                                            showErrorSnackBar(
-                                                "O número de placa ${data['errors']['fields']['license_plate'].join(',\n')}.");
+                                            showErrorSnackBar("O número de placa ${data['errors']['fields']['license_plate'].join(',\n')}.");
                                           }
                                         }
                                       },
                                       child: const Text(
                                         'Adicionar',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                                       ),
                                     ),
                                   ),

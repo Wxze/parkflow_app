@@ -1,8 +1,10 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:parkflow_app/models/parking_lot.dart';
 import 'package:parkflow_app/models/vacancy.dart';
+import 'package:parkflow_app/repository/reservations_repository.dart';
 import 'package:parkflow_app/repository/vacancies_repository.dart';
 import 'package:parkflow_app/view/widgets/default_vacancy_card_message.dart';
 import 'package:parkflow_app/view/widgets/vacancy_card.dart';
@@ -38,8 +40,7 @@ class _ReservationViewState extends State<ReservationView> {
         automaticallyImplyLeading: true,
         title: const Text(
           'ParkFlow',
-          style: TextStyle(
-              fontFamily: 'Galada', color: Colors.white, fontSize: 24),
+          style: TextStyle(fontFamily: 'Galada', color: Colors.white, fontSize: 24),
         ),
       ),
       body: SingleChildScrollView(
@@ -55,10 +56,7 @@ class _ReservationViewState extends State<ReservationView> {
                 child: Text(
                   widget.parkingLot.name,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      color: Color(0xFF35244E),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Color(0xFF35244E), fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(
@@ -85,8 +83,7 @@ class _ReservationViewState extends State<ReservationView> {
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     } else if (!snapshot.hasData) {
-                      return const DefaultVacancyCardMessage(
-                          message: 'Não há vagas disponíveis.');
+                      return const DefaultVacancyCardMessage(message: 'Não há vagas disponíveis.');
                     } else {
                       vacancies = snapshot.data!;
                       if (vacancies.isNotEmpty) {
@@ -96,8 +93,7 @@ class _ReservationViewState extends State<ReservationView> {
                           itemBuilder: (context, index) {
                             return VacancyCard(
                               vacancy: vacancies[index],
-                              isSelected:
-                                  vacancies[index].id == selectedVacancyCardId,
+                              isSelected: vacancies[index].id == selectedVacancyCardId,
                               onCardTapped: () {
                                 setState(() {
                                   selectedVacancyCardId = vacancies[index].id;
@@ -110,8 +106,7 @@ class _ReservationViewState extends State<ReservationView> {
                           },
                         );
                       } else {
-                        return const DefaultVacancyCardMessage(
-                            message: 'Não há vagas disponíveis.');
+                        return const DefaultVacancyCardMessage(message: 'Não há vagas disponíveis.');
                       }
                     }
                   },
@@ -141,8 +136,7 @@ class _ReservationViewState extends State<ReservationView> {
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     } else if (!snapshot.hasData) {
-                      return const DefaultVacancyCardMessage(
-                          message: 'Não há veículos cadastrados.');
+                      return const DefaultVacancyCardMessage(message: 'Não há veículos cadastrados.');
                     } else {
                       vehicles = snapshot.data!;
                       if (vehicles.isNotEmpty) {
@@ -152,8 +146,7 @@ class _ReservationViewState extends State<ReservationView> {
                           itemBuilder: (context, index) {
                             return VehicleCard(
                               vehicle: vehicles[index],
-                              isSelected:
-                                  vehicles[index].id == selectedVehicleCardId,
+                              isSelected: vehicles[index].id == selectedVehicleCardId,
                               onCardTapped: () {
                                 setState(() {
                                   selectedVehicleCardId = vehicles[index].id;
@@ -166,8 +159,7 @@ class _ReservationViewState extends State<ReservationView> {
                           },
                         );
                       } else {
-                        return const DefaultVacancyCardMessage(
-                            message: 'Não há veículos cadastrados.');
+                        return const DefaultVacancyCardMessage(message: 'Não há veículos cadastrados.');
                       }
                     }
                   },
@@ -214,8 +206,7 @@ class _ReservationViewState extends State<ReservationView> {
                             if (date == null) return null;
                             return showTimePicker(
                               context: context,
-                              initialTime: TimeOfDay.fromDateTime(
-                                  currentValue ?? DateTime.now()),
+                              initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                             ).then((time) {
                               if (time == null) return null;
                               return DateTimeField.combine(date, time);
@@ -251,24 +242,34 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               onPressed: () async {
-                DateTime data = DateFormat("dd/MM/yyyy HH:mm")
-                    .parse(_dateTimeController.text);
-                String dataFormatada =
-                    DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
-                print(dataFormatada);
+                if (_dateTimeController.text != '' && selectedVacancyCardId != '' && selectedVehicleCardId != '') {
+                  DateTime data = DateFormat("dd/MM/yyyy HH:mm").parse(_dateTimeController.text);
+                  String dataFormatada = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
+                  print(dataFormatada);
 
-                print('ID Vaga: $selectedVacancyCardId');
-                print('ID Veículo: $selectedVehicleCardId');
+                  Response resp = await ReservationsRepository().createReservation(selectedVacancyCardId, selectedVehicleCardId, dataFormatada);
+
+                  if (resp.statusCode == 200) {
+                    setState(() {
+                      selectedVacancyCardId = '';
+                      selectedVehicleCardId = '';
+                      _dateTimeController.text = '';
+                    });
+                    showSucessSnackBar('Reserva criada com sucesso!');
+                  } else {
+                    // final data = await json.decode(resp.body.toString());
+                    showErrorSnackBar("Erro ao criar reserva.");
+                  }
+                } else {
+                  showErrorSnackBar("Preencha todos os campos.");
+                }
               },
               child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'Reservar',
-                    style: TextStyle(
-                        color: Color(0xFF583290),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Color(0xFF583290), fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(width: 5),
                   Icon(Icons.check_circle, color: Color(0xFF583290), size: 20)
@@ -279,5 +280,35 @@ class _ReservationViewState extends State<ReservationView> {
         ),
       ),
     );
+  }
+
+  void showSucessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.check_circle,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: const Color(0xFF44A33C),
+    ));
+  }
+
+  void showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(
+          Icons.error,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 10),
+        Flexible(child: Text(message))
+      ]),
+      backgroundColor: Colors.red,
+    ));
   }
 }
