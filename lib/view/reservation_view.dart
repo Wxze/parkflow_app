@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -166,7 +168,7 @@ class _ReservationViewState extends State<ReservationView> {
                 ),
               ),
               const SizedBox(
-                height: 46,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -182,8 +184,6 @@ class _ReservationViewState extends State<ReservationView> {
                           filled: true,
                           fillColor: Colors.white,
                           prefixIcon: Icon(Icons.calendar_month),
-                          // prefixIconConstraints:
-                          //     BoxConstraints(minHeight: 32, minWidth: 32),
                           enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                             width: 2,
@@ -220,6 +220,34 @@ class _ReservationViewState extends State<ReservationView> {
                         },
                       ),
                     ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.red,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                  flex: 2,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 16),
+                                    child: Icon(Icons.error, color: Colors.white),
+                                  )),
+                              Flexible(
+                                flex: 8,
+                                child: Text(
+                                  'Caso necessário cancelar a reserva, entre em contato com o estabelecimento.',
+                                  style: TextStyle(fontFamily: 'Lato', fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ))
                   ],
                 ),
               ),
@@ -228,7 +256,7 @@ class _ReservationViewState extends State<ReservationView> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         color: const Color(0xFF583290),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -244,8 +272,7 @@ class _ReservationViewState extends State<ReservationView> {
               onPressed: () async {
                 if (_dateTimeController.text != '' && selectedVacancyCardId != '' && selectedVehicleCardId != '') {
                   DateTime data = DateFormat("dd/MM/yyyy HH:mm").parse(_dateTimeController.text);
-                  String dataFormatada = DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(data);
-                  print(dataFormatada);
+                  String dataFormatada = DateFormat("yyyy-MM-dd'T'HH:mm:ss-03:00").format(data);
 
                   Response resp = await ReservationsRepository().createReservation(selectedVacancyCardId, selectedVehicleCardId, dataFormatada);
 
@@ -257,8 +284,8 @@ class _ReservationViewState extends State<ReservationView> {
                     });
                     showSucessSnackBar('Reserva criada com sucesso!');
                   } else {
-                    // final data = await json.decode(resp.body.toString());
-                    showErrorSnackBar("Erro ao criar reserva.");
+                    final data = await json.decode(resp.body.toString());
+                    showErrorSnackBar("${data['errors']['message']}.");
                   }
                 } else {
                   showErrorSnackBar("Preencha todos os campos.");
