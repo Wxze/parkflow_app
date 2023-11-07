@@ -1,3 +1,4 @@
+import 'package:instant/instant.dart';
 import 'package:intl/intl.dart';
 
 class Reservation {
@@ -22,8 +23,9 @@ class Reservation {
 
   factory Reservation.fromJson(Map<String, dynamic> json) {
     DateTime data = DateTime.parse(json['checkin_date']);
+    DateTime formattedData = dateTimeToZone(zone: "ART", datetime: data);
     DateFormat formato = DateFormat("dd/MM/yyyy HH:mm");
-    String dataFormatted = formato.format(data);
+    String dataFormatted = formato.format(formattedData);
 
     return Reservation(
         id: json['id'],
