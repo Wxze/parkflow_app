@@ -30,7 +30,7 @@ class Reservation {
     return Reservation(
         id: json['id'],
         checkinDate: dataFormatted,
-        parkingLotName: json['parking_lot_name'],
+        parkingLotName: json['parking_lot']['name'],
         vacancyNumber: json['vacancy']['number'],
         sectionName: json['section']['name'],
         vehicleBrand: json['vehicle']['brand'],
