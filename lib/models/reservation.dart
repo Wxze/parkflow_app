@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 class Reservation {
   final String id;
+  final String phone;
   final String checkinDate;
   final String? checkoutDate;
   final String parkingLotName;
@@ -14,6 +15,7 @@ class Reservation {
 
   Reservation(
       {required this.id,
+      required this.phone,
       required this.checkinDate,
       required this.checkoutDate,
       required this.parkingLotName,
@@ -38,6 +40,7 @@ class Reservation {
 
     return Reservation(
         id: json['id'],
+        phone: json['parking_lot']['phone'],
         checkinDate: checkinFormatted,
         checkoutDate: checkoutFormatted,
         parkingLotName: json['parking_lot']['name'],

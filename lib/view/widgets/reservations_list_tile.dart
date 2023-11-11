@@ -46,6 +46,10 @@ class _ReservationsListTileState extends State<ReservationsListTile> {
                   height: 7,
                 ),
                 Text(
+                  'Telefone: ${widget.reservation.phone}',
+                  style: const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                ),
+                Text(
                   'Chegar em: ${widget.reservation.checkinDate}',
                   style: const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                 ),
