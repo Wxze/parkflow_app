@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
+import '../../models/payment.dart';
+
 class PaymentsListTile extends StatefulWidget {
-  const PaymentsListTile({super.key});
+  const PaymentsListTile({super.key, required this.payment});
+  final Payment payment;
 
   @override
   State<PaymentsListTile> createState() => _PaymentsListTileState();
 }
 
 class _PaymentsListTileState extends State<PaymentsListTile> {
+  late Color statusColor;
+
   @override
   Widget build(BuildContext context) {
+    statusColor = setStatusColor(widget.payment.status);
+
     return ListTile(
       tileColor: Colors.white,
       leading: const Column(
@@ -32,29 +39,25 @@ class _PaymentsListTileState extends State<PaymentsListTile> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Flexible(
+              Flexible(
                 flex: 7,
                 child: Text(
-                  'LeroPark - Rede Brasileira de Estacionamentos',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  widget.payment.parkingLotName,
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   overflow: TextOverflow.fade,
                 ),
               ),
               Flexible(
                 flex: 3,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF44A33C),
+                    color: statusColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Text(
-                    'Pago',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
+                  child: Text(
+                    widget.payment.status,
+                    style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -63,7 +66,7 @@ class _PaymentsListTileState extends State<PaymentsListTile> {
           const SizedBox(
             height: 7,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
@@ -72,12 +75,12 @@ class _PaymentsListTileState extends State<PaymentsListTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Checkout - 10:09 de 20/10/2023',
-                      style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                      'Criado em: ${widget.payment.createdAt}',
+                      style: const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                     ),
                     Text(
-                      'Honda Civic - BRA2E19',
-                      style: TextStyle(fontSize: 14, color: Color(0xFF89858E)),
+                      '${widget.payment.vehicleBrand} ${widget.payment.vehicleModel} - ${widget.payment.vehicleLicensePlate}',
+                      style: const TextStyle(fontSize: 14, color: Color(0xFF89858E)),
                     ),
                   ],
                 ),
@@ -85,8 +88,8 @@ class _PaymentsListTileState extends State<PaymentsListTile> {
               Flexible(
                 flex: 3,
                 child: Text(
-                  'R\$ 10,00',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  'R\$ ${widget.payment.price.replaceAll('.', ',')}',
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
               ),
             ],
@@ -94,5 +97,15 @@ class _PaymentsListTileState extends State<PaymentsListTile> {
         ],
       ),
     );
+  }
+
+  Color setStatusColor(String status) {
+    if (status == 'Pendente') {
+      return const Color(0xFFF0BB3C);
+    } else if (status == 'Atrasado') {
+      return const Color(0xFFC45454);
+    } else {
+      return const Color(0xFF44A33C);
+    }
   }
 }
