@@ -31,4 +31,30 @@ class ExternalCustomersRepository {
 
     return externalCustomer;
   }
+
+  Future<Response> updateExternalCustomer({required String email, required String driverId, required String driverName, required String driverPhone}) async {
+    Map<String, String>? auth = await ApiRepository.getTokenData();
+
+    Map body = {
+      "external_customer": {
+        "email": email,
+        "driver_attributes": {"id": driverId, "name": driverName, "phone": driverPhone}
+      }
+    };
+
+    var resp = await put(
+      Uri.parse(ApiRepository.EXTERNAL_CUSTOMERS),
+      headers: <String, String>{
+        'Content-Type': 'application/json;charset=UTF-8',
+        'access-token': auth!['access-token'] ?? '',
+        'token-type': auth['token-type'] ?? '',
+        'uid': auth['uid'] ?? '',
+        'expiry': auth['expiry'] ?? '',
+        'client': auth['client'] ?? '',
+      },
+      body: json.encode(body),
+    );
+
+    return resp;
+  }
 }
