@@ -223,31 +223,34 @@ class _ReservationViewState extends State<ReservationView> {
                     const SizedBox(
                       height: 25,
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.red,
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                          child: Row(
-                            children: [
-                              Flexible(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 16),
-                                    child: Icon(Icons.error, color: Colors.white),
-                                  )),
-                              Flexible(
-                                flex: 8,
-                                child: Text(
-                                  'Caso necessário cancelar a reserva, entre em contato com o estabelecimento.',
-                                  style: TextStyle(fontFamily: 'Lato', fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ],
+                    Card(
+                      elevation: 3,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.white,
                           ),
-                        ))
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            child: Row(
+                              children: [
+                                Flexible(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 16),
+                                      child: Icon(Icons.error, color: Color(0xFFF0BB3C)),
+                                    )),
+                                Flexible(
+                                  flex: 8,
+                                  child: Text(
+                                    'Caso necessário cancelar a reserva, entre em contato com o estabelecimento.',
+                                    style: TextStyle(fontFamily: 'Lato', fontSize: 14, fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    )
                   ],
                 ),
               ),
