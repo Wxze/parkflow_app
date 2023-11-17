@@ -25,6 +25,8 @@ abstract class ApiRepository {
 
   static const PAYMENTS = '${BASE}api/app/customer_payments';
 
+  static const EXTERNAL_CUSTOMERS = '${BASE}api/app/external_customers';
+
   static Future<Map<String, String>?> getTokenData() async {
     var data = await STORAGE.read(key: 'auth');
 
