@@ -8,7 +8,7 @@ class VacanciesRepository {
     Map<String, String>? auth = await ApiRepository.getTokenData();
 
     var resp = await get(
-      Uri.parse('${ApiRepository.VACANCIES}?parking_lot=$parkingLotId'),
+      Uri.parse('${ApiRepository.VACANCIES}?parking_lot=$parkingLotId&per_page=100'),
       headers: <String, String>{
         'Content-Type': 'application/json;charset=UTF-8',
         'access-token': auth!['access-token'] ?? '',
